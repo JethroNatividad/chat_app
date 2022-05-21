@@ -1,7 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { getDoc, setDoc } from "firebase/firestore"
 import { auth } from "../firebase"
-import { getErrorMessage } from "../helpers"
+import { generateUniqueNumber, getErrorMessage } from "../helpers"
 import { userRef } from "../refs/User"
 
 export const signInWithGoogle = async () => {
@@ -12,6 +12,7 @@ export const signInWithGoogle = async () => {
         const { user } = result
         const userData = await getDoc(userRef(user.uid))
         if (!userData.exists) {
+            const uniqueNumber = await generateUniqueNumber()
             await setDoc(userRef(user.uid), {
                 email: user.email || '',
                 username: user.displayName || 'User',
@@ -19,6 +20,7 @@ export const signInWithGoogle = async () => {
                 chatGroups: [],
                 following: [],
                 followers: [],
+                uniqueNumber
             })
         }
         return null

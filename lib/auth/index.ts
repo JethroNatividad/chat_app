@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { setDoc } from "firebase/firestore";
 import { auth } from "../firebase";
-import { getErrorMessage } from "../helpers";
+import { generateUniqueNumber, getErrorMessage } from "../helpers";
 import { userRef } from "../refs/User";
 
 export async function signup(username: string, email: string, password: string) {
@@ -9,6 +9,7 @@ export async function signup(username: string, email: string, password: string) 
         const data = await createUserWithEmailAndPassword(auth, email, password)
         const { user } = data
         // save user in db
+        const uniqueNumber = await generateUniqueNumber()
         await setDoc(userRef(user.uid), {
             email,
             username,
@@ -16,6 +17,7 @@ export async function signup(username: string, email: string, password: string) 
             chatGroups: [],
             following: [],
             followers: [],
+            uniqueNumber
         })
 
         return null
