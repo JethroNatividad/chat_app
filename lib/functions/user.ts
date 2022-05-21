@@ -1,4 +1,5 @@
 import { getDoc, updateDoc } from "firebase/firestore"
+import { User } from "../../types/User"
 import { auth } from "../firebase"
 import { userRef } from "../refs/User"
 
@@ -46,4 +47,40 @@ export const removeFriend = async (userId: string) => {
     if (!userToRemove.followers.includes(currentUid)) return
     userToRemove.followers = userToRemove.followers.filter(id => id !== currentUid)
     await updateDoc(userRef(userId), userToRemove)
+}
+
+export const getUserFriends = async (following: string[], followers: string[]) => {
+    const friendIds: string[] = []
+    let followingIds: string[] = following
+    let followersIds: string[] = followers
+
+    following.forEach((followingId: string) => {
+        followers.forEach((followerId: string) => {
+            if (followingId === followerId) {
+                friendIds.push(followingId)
+                // remove in case of duplicates
+                followingIds = followingIds.filter(id => id !== followingId)
+                followersIds = followersIds.filter(id => id !== followerId)
+            }
+        })
+    })
+    const friends = friendIds.map(async (friendId: string) => {
+        const friend = (await getDoc(userRef(friendId))).data()
+        if (friend) return friend
+    })
+    const followingUsers = followingIds.map(async (followingId: string) => {
+        const user = (await getDoc(userRef(followingId))).data()
+        if (user) return user
+    })
+    const followersUsers = followersIds.map(async (followerId: string) => {
+        const user = (await getDoc(userRef(followerId))).data()
+        if (user) return user
+    })
+
+    return {
+        friends,
+        incomingRequests: followersUsers,
+        outgoingRequests: followingUsers
+    }
+
 }
