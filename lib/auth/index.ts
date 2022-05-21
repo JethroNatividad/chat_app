@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { setDoc } from "firebase/firestore";
-import { auth } from "./firebase";
-import { getErrorMessage } from "./helpers";
-import { userRef } from "./refs/User";
+import { auth } from "../firebase";
+import { getErrorMessage } from "../helpers";
+import { userRef } from "../refs/User";
 
 export async function signup(username: string, email: string, password: string) {
     try {
