@@ -24,3 +24,13 @@ export async function signup(username: string, email: string, password: string) 
         return message
     }
 }
+
+export async function signin(email: string, password: string) {
+    try {
+        await signInWithEmailAndPassword(auth, email, password)
+        return null
+    } catch (error: unknown) {
+        const message: string = getErrorMessage(error)
+        return message
+    }
+}
