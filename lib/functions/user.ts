@@ -24,3 +24,26 @@ export const addFriend = async (userId: string) => {
     await updateDoc(userRef(userId), userToAdd)
 
 }
+
+export const removeFriend = async (userId: string) => {
+    // check if there is current user
+    if (!auth.currentUser) return
+    if (userId === auth.currentUser.uid) return
+    const currentUid = auth.currentUser.uid
+
+    // get user to remove and current user data
+    const userToRemove = (await getDoc(userRef(userId))).data()
+    const currentUser = (await getDoc(userRef(currentUid))).data()
+
+    if (!userToRemove || !currentUser) return
+
+    // check if user is already not in current user's following list
+    if (!currentUser.following.includes(userId)) return
+    currentUser.following = currentUser.following.filter(id => id !== userId)
+    await updateDoc(userRef(currentUid), currentUser)
+
+    // check if current user is already not in user to remove's followers list
+    if (!userToRemove.followers.includes(currentUid)) return
+    userToRemove.followers = userToRemove.followers.filter(id => id !== currentUid)
+    await updateDoc(userRef(userId), userToRemove)
+}
