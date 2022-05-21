@@ -1,4 +1,4 @@
-import { CollectionReference, doc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { User } from "../../types/User";
 import { createCollection } from "../helpers";
 
