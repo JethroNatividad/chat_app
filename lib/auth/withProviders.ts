@@ -11,10 +11,10 @@ export const signInWithGoogle = async () => {
         // get user in db, if not exist, create it
         const { user } = result
         const userData = await getDoc(userRef(user.uid))
-        if (!userData.exists && user.email && user.displayName) {
+        if (!userData.exists) {
             await setDoc(userRef(user.uid), {
-                email: user.email,
-                username: user.displayName,
+                email: user.email || '',
+                username: user.displayName || 'User',
                 uid: user.uid,
                 chatGroups: [],
                 following: [],
