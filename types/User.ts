@@ -5,6 +5,7 @@ export type User = {
     chatGroups: string[]
     following: string[]
     followers: string[]
+    uniqueNumber: number
 }
 
 export type CreateUser = {
@@ -16,4 +17,8 @@ export type CreateUser = {
 export type LoginUser = {
     email: string
     password: string
+}
+
+export type LastUniqueNumber = {
+    LastUniqueNumber: number
 }
