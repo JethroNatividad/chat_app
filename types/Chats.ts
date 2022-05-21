@@ -1,9 +1,12 @@
 import { FieldValue } from "firebase/firestore"
 
-export type RecentMessage = {
-    sentBy: string
-    sentAt: FieldValue
+export type Message = {
     messageText: string
+    sentAt: FieldValue
+    sentBy: string
+}
+
+export type RecentMessage = Message & {
     readBy: string[]
 }
 
@@ -12,6 +15,6 @@ export type ChatGroup = {
     createdAt: FieldValue
     createdBy: string
     members: string[]
-    recentMessage: RecentMessage
+    recentMessage: RecentMessage | null
 }
 
