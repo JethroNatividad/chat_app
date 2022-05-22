@@ -17,4 +17,5 @@ export type ChatGroup = {
     members: string[]
     recentMessage: RecentMessage | null
 }
-
+// create type of chatgroup without id
+export type ChatGroupWithoutId = Omit<ChatGroup, 'id'>
