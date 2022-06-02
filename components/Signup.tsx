@@ -1,5 +1,6 @@
 import { signOut } from 'firebase/auth'
 import { Formik } from 'formik'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { signup } from '../lib/auth'
 import { signInWithGoogle } from '../lib/auth/withProviders'
@@ -8,6 +9,7 @@ import { auth } from '../lib/firebase'
 type Props = {}
 
 const Signup = (props: Props) => {
+    const router = useRouter()
     return (
         <div className='bg-secondary-dark h-screen w-screen'>
             <div className='bg-primary-dark h-full w-full max-w-3xl mx-auto'>
@@ -78,7 +80,7 @@ const Signup = (props: Props) => {
 
                             </div>
                             <button disabled={isSubmitting} className="btn-dark w-52" type="submit">Submit</button>
-                            <button className="btn-dark w-52" type='button'>Already have an account</button>
+                            <button className="btn-dark w-52" type='button' onClick={() => router.push('/login')}>Already have an account</button>
                             <div className='text-center space-y-2'>
                                 <p className='text-white'>Or Sign in with:</p>
                                 <button className="btn-dark" type='button' onClick={async () => {
