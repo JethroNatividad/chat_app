@@ -46,7 +46,7 @@ const Login = (props: Props) => {
                                 value={values.password}
                                 placeholder='Password'
                             />
-                            <button disabled={isSubmitting} className="" type="submit">Submit</button>
+                            <button disabled={isSubmitting} className="btn-dark" type="submit">Submit</button>
                         </form>
                     )}
                 </Formik>
