@@ -1,5 +1,6 @@
 import { Formik } from 'formik'
 import React from 'react'
+import { signin } from '../lib/auth'
 
 type Props = {}
 
@@ -12,12 +13,13 @@ const Login = (props: Props) => {
                 </div>
                 <Formik initialValues={{ email: '', password: '' }} onSubmit={async ({ email, password }, { setSubmitting, setFieldValue }) => {
                     setSubmitting(true)
-                    // console.log(text)
-                    // setFieldValue('text', text);
-                    // await createTodo({ text, completed: false })
-                    // await editTodo(id, { completed, text })
+                    const error = await signin(email, password)
+                    if (error) {
+                        setSubmitting(false)
+                        alert(error)
+                    }
+                    alert("Logged in bro")
                     setSubmitting(false)
-                    // setEditing(false)
                 }}>
                     {({
                         values,
