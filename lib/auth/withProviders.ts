@@ -13,7 +13,7 @@ export const signInWithGoogle = async () => {
         // get user in db, if not exist, create it
         const { user } = result
         const userData = await getDoc(userRef(user.uid))
-        if (!userData.exists) {
+        if (!userData.exists()) {
             console.log("No user found, creating user")
             const uniqueNumber = await generateUniqueNumber()
             await setDoc(userRef(user.uid), {
