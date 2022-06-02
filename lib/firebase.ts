@@ -1,5 +1,5 @@
 import { FirebaseOptions, initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore'
+import { collection, CollectionReference, DocumentData, getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig: FirebaseOptions = {
@@ -17,3 +17,7 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app)
 
 export const auth = getAuth(app)
+
+export const createCollection = <T = DocumentData>(collectionName: string) => {
+    return collection(db, collectionName) as CollectionReference<T>
+}
