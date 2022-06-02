@@ -16,7 +16,7 @@ const Login = (props: Props) => {
                     const error = await signin(email, password)
                     if (error) {
                         setSubmitting(false)
-                        alert(error)
+                        return alert(error)
                     }
                     alert("Logged in bro")
                     setSubmitting(false)
