@@ -29,7 +29,7 @@ const Login = (props: Props) => {
                     }) => (
                         <form className="flex flex-col w-full p-5 space-y-3 " onSubmit={handleSubmit}>
                             <input
-                                className='btn-dark'
+                                className='input-dark'
                                 type="email"
                                 name="email"
                                 onChange={handleChange}
@@ -38,7 +38,7 @@ const Login = (props: Props) => {
                                 placeholder='Email'
                             />
                             <input
-                                className='btn-dark'
+                                className='input-dark'
                                 type="password"
                                 name="password"
                                 onChange={handleChange}
