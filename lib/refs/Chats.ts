@@ -1,6 +1,6 @@
 import { doc } from "firebase/firestore";
 import { ChatGroup, Message } from "../../types/Chats";
-import { createCollection } from "../helpers";
+import { createCollection } from "../firebase";
 
 export const chatGroupsRef = createCollection<ChatGroup>('chatGroups');
 

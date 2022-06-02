@@ -1,10 +1,6 @@
-import { collection, CollectionReference, doc, DocumentData } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { LastUniqueNumber, User } from "../../types/User";
-import { db } from "../firebase";
-
-export const createCollection = <T = DocumentData>(collectionName: string) => {
-    return collection(db, collectionName) as CollectionReference<T>
-}
+import { createCollection } from "../firebase";
 
 export const usersRef = createCollection<User>('users')
 
