@@ -7,11 +7,14 @@ import { userRef } from "../refs/User"
 export const signInWithGoogle = async () => {
     try {
         const provider = new GoogleAuthProvider()
+        console.log("Logging in")
         const result = await signInWithPopup(auth, provider)
+        console.log("Logged in, getting user")
         // get user in db, if not exist, create it
         const { user } = result
         const userData = await getDoc(userRef(user.uid))
         if (!userData.exists) {
+            console.log("No user found, creating user")
             const uniqueNumber = await generateUniqueNumber()
             await setDoc(userRef(user.uid), {
                 email: user.email || '',
@@ -22,7 +25,11 @@ export const signInWithGoogle = async () => {
                 followers: [],
                 uniqueNumber
             })
+        console.log("User created")
+        return null
         }
+        console.log("User found, login success", userData.data())
+
         return null
     } catch (error: unknown) {
         const message: string = getErrorMessage(error)
