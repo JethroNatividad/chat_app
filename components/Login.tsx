@@ -1,6 +1,9 @@
+import { signOut } from 'firebase/auth'
 import { Formik } from 'formik'
 import React from 'react'
-import { signin } from '../lib/auth'
+import { signin} from '../lib/auth'
+import { signInWithGoogle } from '../lib/auth/withProviders'
+import { auth } from '../lib/firebase'
 
 type Props = {}
 
@@ -52,7 +55,14 @@ const Login = (props: Props) => {
                             <button className="btn-dark w-48" type='button'>Create an account</button>
                             <div className='text-center space-y-2'>
                                 <p className='text-white'>Or Sign in with:</p>
-                                <button className="btn-dark" type='button'>Google</button>
+                                <button className="btn-dark" type='button' onClick={async () => {
+                                    const error = await signInWithGoogle()
+                                    if(error) {
+                                        alert(error)
+                                        return await signOut(auth)
+                                    }
+                                    alert("Login success")
+                                }}>Google</button>
                             </div>
                         </form>
                     )}
