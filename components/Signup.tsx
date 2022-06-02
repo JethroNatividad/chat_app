@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth'
 import { Formik } from 'formik'
 import React from 'react'
-import { signin } from '../lib/auth'
+import { signup } from '../lib/auth'
 import { signInWithGoogle } from '../lib/auth/withProviders'
 import { auth } from '../lib/firebase'
 
@@ -14,14 +14,19 @@ const Signup = (props: Props) => {
                 <div className='shadow-sm shadow-secondary-dark py-5 px-7' >
                     <h1 className='text-xl text-white font-bold'>Sign up</h1>
                 </div>
-                <Formik initialValues={{ username: '', email: '', password: '', repeat: '' }} onSubmit={async ({ email, password }, { setSubmitting, setFieldValue }) => {
+                <Formik initialValues={{ username: '', email: '', password: '', repeat: '' }} onSubmit={async ({ username, email, password, repeat }, { setSubmitting, setFieldValue }) => {
+                    if (password !== repeat) {
+                        setFieldValue('password', '')
+                        setFieldValue('repeat', '')
+                        return alert('Password dont match')
+                    }
                     setSubmitting(true)
-                    const error = await signin(email, password)
+                    const error = await signup(username, email, password)
                     if (error) {
                         setSubmitting(false)
                         return alert(error)
                     }
-                    alert("Logged in bro")
+                    alert("Signed up bro")
                     setSubmitting(false)
                 }}>
                     {({
