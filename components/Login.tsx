@@ -22,9 +22,9 @@ const Login = (props: Props) => {
                     const error = await signin(email, password)
                     if (error) {
                         setSubmitting(false)
-                        return toast(error)
+                        return toast.error(error)
                     }
-                    alert("Logged in bro")
+                    toast.dark("Welcome back")
                     setSubmitting(false)
                 }}>
                     {({
