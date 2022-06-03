@@ -2,12 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
     .input-dark {
         @apply outline-none rounded-md px-3 py-2 font-semibold bg-secondary-dark placeholder:text-white text-white focus:shadow-lg focus:ring-1 focus:ring-gray-500 transition-all ease-in-out duration-200;
     }
-    .btn-dark{
+
+    .btn-dark {
         @apply bg-secondary-dark mx-auto px-3 py-2 rounded-md text-white hover:shadow-lg hover:ring-1 hover:ring-gray-500 transition-all ease-in-out duration-200;
+    }
+
+    /* Toastify */
+
+
+    .Toastify__progress-bar-theme--light {
+        @apply bg-primary-dark;
+    }
+
+    .Toastify__progress-bar-theme--dark {
+        @apply bg-white;
+    }
+
+    .Toastify__progress-bar--success {
+        @apply bg-green-600;
+    }
+
+    .Toastify__progress-bar--warning {
+        @apply bg-orange-600;
+    }
+
+    .Toastify__progress-bar--error {
+        @apply bg-red-600;
     }
 }
