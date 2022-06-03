@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Menu from '../components/Menu'
 import { auth } from '../lib/firebase'
 
 const Home: NextPage = () => {
@@ -24,8 +25,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Hello world</h1>
+      <main className='h-screen'>
+        <Menu />
       </main>
     </div>
   )

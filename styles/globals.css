@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+    .input {
+        @apply outline-none rounded-md px-3 py-2 font-semibold focus:shadow-lg focus:ring-1 transition-all ease-in-out duration-200;
+    }
     .input-dark {
         @apply outline-none rounded-md px-3 py-2 font-semibold bg-secondary-dark placeholder:text-white text-white focus:shadow-lg focus:ring-1 focus:ring-gray-500 transition-all ease-in-out duration-200;
     }
