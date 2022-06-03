@@ -1,7 +1,21 @@
+import { onAuthStateChanged } from 'firebase/auth'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { auth } from '../lib/firebase'
 
 const Home: NextPage = () => {
+  const router = useRouter()
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) return router.push('/login')
+    })
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
   return (
     <div>
       <Head>
