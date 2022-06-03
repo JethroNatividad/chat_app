@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { CogIcon, UsersIcon } from '@heroicons/react/solid'
 type Props = {}
 
 const Menu = (props: Props) => {
@@ -14,7 +14,15 @@ const Menu = (props: Props) => {
             <div className='flex-1'>Chat list</div>
 
             {/* User bar */}
-            <div className='w-full h-16 bg-gray-900'>
+            <div className='w-full flex h-16 justify-between bg-gray-900 px-2'>
+                <div className='flex h-full space-x-2 items-center justify-center w-fit'>
+                    <div className='h-10 w-10 rounded-3xl bg-white'></div>
+                    <p className='text-white font-semibold text-md'>Username</p>
+                </div>
+                <div className='flex items-center space-x-3'>
+                    <UsersIcon className='h-10 w-10 text-gray-50 cursor-pointer' />
+                    <CogIcon className='h-10 w-10 text-gray-50 cursor-pointer' />
+                </div>
 
             </div>
         </div>
