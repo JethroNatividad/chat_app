@@ -24,7 +24,7 @@ const Login = (props: Props) => {
                         setSubmitting(false)
                         return toast.error(error)
                     }
-                    toast.dark("Welcome back")
+                    toast.success("Welcome back")
                     setSubmitting(false)
                 }}>
                     {({
