@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useUser from '../hooks/useUser'
 import { chatGroupRef } from '../lib/refs/Chats'
 import { userRef } from '../lib/refs/User'
-import { ChatGroup, PopulatedChatGroup } from '../types/Chats'
+import { PopulatedChatGroup } from '../types/Chats'
 import { User } from '../types/User'
 
 type Props = {
@@ -35,16 +35,13 @@ const ChatItem = ({ chatGroupId }: Props) => {
         }
     }, [chatGroupId, currentUser])
 
-
-
-
     return (
         <div className='flex space-x-2 items-center p-2 hover:bg-gray-100 cursor-pointer rounded-lg'>
             <div className='h-9 w-9 rounded-3xl bg-white' />
             <div className='flex flex-col justify-center flex-1'>
                 <p className='text-white font-semibold text-md'>{data?.members.map((user) => `${user.username} `)}</p>
                 <p className='text-white text-xs line-clamp-1'>
-                    {/* {recentMessage} */}
+                    {data?.recentMessage?.messageText}
                 </p>
             </div>
         </div>
