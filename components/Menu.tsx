@@ -1,5 +1,6 @@
 import React from 'react'
 import { CogIcon, UsersIcon } from '@heroicons/react/solid'
+import ChatItem from './ChatItem'
 type Props = {}
 
 const Menu = (props: Props) => {
@@ -11,12 +12,17 @@ const Menu = (props: Props) => {
             </div>
 
             {/* Chat list */}
-            <div className='flex-1'>Chat list</div>
+            <div className='flex-1 p-2'>
+                <ChatItem username='John Doe' recentMessage='Hello' />
+                <ChatItem username='John Doe' recentMessage='Hello' />
+                <ChatItem username='John Doe' recentMessage='Hello' />
+
+            </div>
 
             {/* User bar */}
             <div className='w-full flex h-16 justify-between bg-gray-900 px-2'>
                 <div className='flex h-full space-x-2 items-center justify-center w-fit'>
-                    <div className='h-10 w-10 rounded-3xl bg-white'></div>
+                    <div className='h-10 w-10 rounded-3xl bg-white' />
                     <div className='flex justify-center items-center space-x-2'>
                         <p className='text-white font-semibold text-md'>Username</p>
                         <p className='text-md font-semibold text-gray-500'>#1</p>
