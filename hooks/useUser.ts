@@ -4,9 +4,8 @@ import { auth } from "../lib/firebase"
 import { userRef } from "../lib/refs/User"
 import { User } from "../types/User"
 
-type Props = {}
 
-const useUser = (props: Props) => {
+const useUser = () => {
     const [user, setUser] = useState<User | null>(null)
     const currentUser = auth.currentUser
 

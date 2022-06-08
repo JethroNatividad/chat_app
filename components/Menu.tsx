@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CogIcon, UsersIcon } from '@heroicons/react/solid'
 import ChatItem from './ChatItem'
+import useUser from '../hooks/useUser'
+import { ChatGroup } from '../types/Chats'
+
 type Props = {}
 
 const Menu = (props: Props) => {
+    const currentUser = useUser()
+    const chatGroups = currentUser?.chatGroups ?? []
     return (
         <div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
             {/* Header */}
