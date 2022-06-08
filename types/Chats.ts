@@ -1,4 +1,5 @@
 import { FieldValue } from "firebase/firestore"
+import { User } from "./User"
 
 export type Message = {
     messageText: string
@@ -16,6 +17,9 @@ export type ChatGroup = {
     createdBy: string
     members: string[]
     recentMessage: RecentMessage | null
+}
+export type PopulatedChatGroup = Omit<ChatGroup, 'members'> & {
+    members: User[]
 }
 // create type of chatgroup without id
 export type ChatGroupWithoutId = Omit<ChatGroup, 'id'>
