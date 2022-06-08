@@ -8,7 +8,7 @@ type Props = {}
 
 const Menu = (props: Props) => {
     const currentUser = useUser()
-    const chatGroups = currentUser?.chatGroups ?? []
+    const chatGroupIds: string[] = currentUser?.chatGroups ?? []
     return (
         <div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
             {/* Header */}
@@ -18,9 +18,9 @@ const Menu = (props: Props) => {
 
             {/* Chat list */}
             <div className='flex-1 p-2'>
-                <ChatItem username='John Doe' recentMessage='Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus cum, laboriosam recusandae quaerat distinctio veritatis voluptatibus magni, ea animi libero quis, officia fuga eaque? Ipsum, quasi ullam dolorem accusantium maiores dolore? Ipsa velit praesentium tenetur ab, delectus voluptate, natus itaque provident neque a aspernatur tempore, voluptas omnis! Expedita illum enim fugiat dicta totam, dolorum quo ipsa reiciendis tempora cumque animi quaerat suscipit. Officiis et minus recusandae delectus quae ipsa possimus quibusdam, aliquam dolorum? Dolorum repellendus commodi eligendi, illum soluta assumenda sapiente totam molestiae, veritatis rem dolor distinctio asperiores perspiciatis minima numquam ipsam sit laboriosam eaque! Iusto officia doloremque neque officiis?' />
-                <ChatItem username='John Doe' recentMessage='Hello' />
-                <ChatItem username='John Doe' recentMessage='Hello' />
+                {chatGroupIds.map((chatGroupId) => (
+                    <ChatItem key={chatGroupId} chatGroupId={chatGroupId} />
+                ))}
 
             </div>
 
