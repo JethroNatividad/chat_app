@@ -88,7 +88,10 @@ export const getUserFriends = async (following: string[], followers: string[]) =
 
 export const searchUsers = async (search: string) => {
     // search for every user that contains the search string in their name
-    const q = query(usersRef, where('name', '>=', search), where('name', '<=', `${search}\uf8ff`))
-    const users = (await getDocs(q)).docs.map(doc => doc.data())
-    return users
+    const q = query(usersRef, where('username', '>=', search), where('username', '<=', `${search}\uf8ff`))
+    const res: User[] = []
+    const users = (await getDocs(q)).forEach(user => {
+        if (user.data()) res.push(user.data())
+    })
+    return res
 } 
