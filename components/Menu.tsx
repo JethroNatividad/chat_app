@@ -3,6 +3,7 @@ import { CogIcon, UsersIcon } from '@heroicons/react/solid'
 import ChatItem from './ChatItem'
 import useUser from '../hooks/useUser'
 import { ChatGroup } from '../types/Chats'
+import SearchBar from './SearchBar'
 
 type Props = {}
 
@@ -13,7 +14,7 @@ const Menu = (props: Props) => {
         <div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
             {/* Header */}
             <div className='w-full flex flex-col justify-center px-2 shadow-md h-16'>
-                <input type='text' placeholder='Test' className='input bg-primary-dark text-white placeholder:text-white ring-gray-500' />
+                <SearchBar />
             </div>
 
             {/* Chat list */}
