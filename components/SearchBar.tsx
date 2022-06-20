@@ -30,7 +30,7 @@ const SearchBar = (props: Props) => {
 
             <div className='absolute top-14 left-0 w-full'>
                 {searchResults.map((user) => (
-                    <div className='flex bg-gray-100 hover:bg-gray-200 px-3 py-2 items-center space-x-2 '>
+                    <div className='flex bg-gray-100 cursor-pointer hover:bg-gray-200 px-3 py-2 items-center space-x-2 '>
                         <div className='h-10 w-10 rounded-3xl bg-white relative overflow-hidden'>
                             <Image src={user.profilePicture} layout="fill" objectFit='cover' />
                         </div>
