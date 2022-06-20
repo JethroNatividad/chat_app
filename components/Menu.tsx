@@ -4,6 +4,7 @@ import ChatItem from './ChatItem'
 import useUser from '../hooks/useUser'
 import { ChatGroup } from '../types/Chats'
 import SearchBar from './SearchBar'
+import Image from 'next/image'
 
 type Props = {}
 
@@ -28,10 +29,16 @@ const Menu = (props: Props) => {
             {/* User bar */}
             <div className='w-full flex h-16 justify-between bg-gray-900 px-2'>
                 <div className='flex h-full space-x-2 items-center justify-center w-fit'>
-                    <div className='h-10 w-10 rounded-3xl bg-white' />
+                    <div className='h-10 w-10 rounded-3xl bg-white relative overflow-hidden'>
+                        {
+                            currentUser?.profilePicture ? (
+                                <Image src={currentUser.profilePicture} layout="fill" objectFit='cover' />
+                            ) : null
+                        }
+                    </div>
                     <div className='flex justify-center items-center space-x-2'>
-                        <p className='text-white font-semibold text-md'>Username</p>
-                        <p className='text-md font-semibold text-gray-500'>#1</p>
+                        <p className='text-white font-semibold text-md'>{currentUser?.username}</p>
+                        <p className='text-md font-semibold text-gray-500'>#{currentUser?.uniqueNumber}</p>
                     </div>
                 </div>
                 <div className='flex items-center space-x-3'>
