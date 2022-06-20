@@ -23,10 +23,11 @@ export const signInWithGoogle = async () => {
                 chatGroups: [],
                 following: [],
                 followers: [],
-                uniqueNumber
+                uniqueNumber,
+                profilePicture: 'https://firebasestorage.googleapis.com/v0/b/chat-app-a5f37.appspot.com/o/profilepictures%2Fimages.png?alt=media&token=d77e1e3d-aff4-4e63-8532-12606736f3dc'
             })
-        console.log("User created")
-        return null
+            console.log("User created")
+            return null
         }
         console.log("User found, login success", userData.data())
 
