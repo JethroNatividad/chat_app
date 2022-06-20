@@ -20,13 +20,17 @@ const SearchBar = (props: Props) => {
         fn()
     }, [searchText])
 
+    // {"uniqueNumber":2,"username":"Jethro","following":[],"email":"kel73896@gmail.com","followers":[],"uid":"GXn7G4cupjP5YwGXWUOkLCxwSPK2","chatGroups":[]}
     return (
-        <div>
+        <div className='relative'>
             <input onChange={(e) => {
                 setSearchText(e.currentTarget.value)
-            }} value={searchText} type='text' placeholder='Test' className='input bg-primary-dark text-white placeholder:text-white ring-gray-500' />
+            }} value={searchText} type='text' placeholder='Search users' className='input bg-primary-dark text-white placeholder:text-white ring-gray-500 w-full' />
 
-            <p>{JSON.stringify(searchResults)}</p>
+            <div className='absolute top-11 left-0 bg-black h-28 w-full'>
+                <p className='text-white'>{JSON.stringify(searchResults)}</p>
+                Yo
+            </div>
         </div>
     )
 }
