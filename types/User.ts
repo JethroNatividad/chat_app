@@ -6,12 +6,14 @@ export type User = {
     following: string[]
     followers: string[]
     uniqueNumber: number
+    profilePicture: string
 }
 
 export type CreateUser = {
     username: string
     email: string
     password: string
+    profilePicture: string
 }
 
 export type LoginUser = {
