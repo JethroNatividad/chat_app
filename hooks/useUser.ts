@@ -7,20 +7,24 @@ import { User } from "../types/User"
 
 const useUser = () => {
     const [user, setUser] = useState<User | null>(null)
-    const currentUser = auth.currentUser
 
     useEffect(() => {
-        if (currentUser) {
-            const unsubscribe = onSnapshot(userRef(currentUser.uid), (snapshot) => {
-                const userData = snapshot.data()
-                if (!userData) return setUser(null)
-                setUser(userData)
-            })
-            return () => {
-                unsubscribe()
+        const unsub = auth.onAuthStateChanged(user => {
+            if (user) {
+                const unsubscribe = onSnapshot(userRef(user.uid), (snapshot) => {
+                    const userData = snapshot.data()
+                    if (!userData) return setUser(null)
+                    setUser(userData)
+                })
+                return () => {
+                    unsubscribe()
+                }
             }
+        })
+        return () => {
+            unsub()
         }
-    }, [currentUser])
+    }, [])
 
     return user
 }
