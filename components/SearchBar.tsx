@@ -28,11 +28,15 @@ const SearchBar = (props: Props) => {
                 setSearchText(e.currentTarget.value)
             }} value={searchText} type='text' placeholder='Search users' className='input bg-primary-dark text-white placeholder:text-white ring-gray-500 w-full' />
 
-            <div className='absolute top-11 left-0 bg-black h-28 w-full'>
+            <div className='absolute top-14 left-0 w-full'>
                 {searchResults.map((user) => (
-                    <div>
+                    <div className='flex bg-gray-100 hover:bg-gray-200 px-3 py-2 items-center space-x-2 '>
                         <div className='h-10 w-10 rounded-3xl bg-white relative overflow-hidden'>
                             <Image src={user.profilePicture} layout="fill" objectFit='cover' />
+                        </div>
+                        <div className='flex items-center space-x-1'>
+                            <p className='text-white font-semibold text-md'>{user.username}</p>
+                            <p className='text-gray-50 font-semibold text-md'>#{user.uniqueNumber}</p>
                         </div>
                     </div>
                 ))}
