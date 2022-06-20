@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import ChatView from '../components/ChatView'
 import Menu from '../components/Menu'
 import { auth } from '../lib/firebase'
 
@@ -25,8 +26,14 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className='h-screen'>
-        <Menu />
+      <main className='h-screen flex'>
+        <div className='w-1/3 h-full'>
+          <Menu />
+        </div>
+        <div className='flex-1 h-full'>
+          <ChatView />
+        </div>
+
       </main>
     </div>
   )
