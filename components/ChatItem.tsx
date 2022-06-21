@@ -1,4 +1,5 @@
 import { getDoc, onSnapshot } from 'firebase/firestore'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import useUser from '../hooks/useUser'
 import { populateUserId, populateUserIds } from '../lib/functions/user'
@@ -33,7 +34,13 @@ const ChatItem = ({ chatGroupId }: Props) => {
 
     return (
         <div className='flex space-x-2 items-center p-2 hover:bg-gray-100 cursor-pointer rounded-lg'>
-            <div className='h-9 w-9 rounded-3xl bg-white' />
+            <div className='h-9 w-9 rounded-3xl bg-white relative overflow-hidden' >
+                {
+                    data?.members[0]?.profilePicture ? (
+                        <Image src={data?.members[0]?.profilePicture} layout="fill" objectFit='cover' />
+                    ) : null
+                }
+            </div>
             <div className='flex flex-col justify-center flex-1'>
                 <p className='text-white font-semibold text-md'>{data?.members[0]?.username}</p>
                 <p className='text-white text-xs line-clamp-1'>
