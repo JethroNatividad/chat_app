@@ -29,7 +29,7 @@ const Home: NextPage = () => {
 
       <main className='h-screen flex'>
         <div className='w-1/3 h-full'>
-          <Menu />
+          <Menu openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
         </div>
         <div className='flex-1 h-full'>
           <ChatView openChatGroupId={openChatGroupId} />

@@ -9,12 +9,17 @@ import { ChatGroup, PopulatedChatGroup } from '../types/Chats'
 import { User } from '../types/User'
 
 type Props = {
-
     chatGroupId: string
+    openChatGroupId: string | null
+    setOpenChatGroupId: (chatGroupId: string) => void
 }
 
-const ChatItem = ({ chatGroupId }: Props) => {
+const ChatItem = ({ chatGroupId, openChatGroupId, setOpenChatGroupId }: Props) => {
     const [data, setData] = useState<PopulatedChatGroup>()
+    const active = openChatGroupId === chatGroupId
+    const handleClick = () => {
+        if (!active) setOpenChatGroupId(chatGroupId)
+    }
 
     useEffect(() => {
         const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
@@ -33,7 +38,7 @@ const ChatItem = ({ chatGroupId }: Props) => {
 
 
     return (
-        <div className='flex space-x-2 items-center p-2 hover:bg-gray-100 cursor-pointer rounded-lg'>
+        <div onClick={handleClick} className={`${active ? 'bg-gray-100' : 'hover:bg-gray-200'} flex space-x-2 items-center p-2 cursor-pointer rounded-lg`}>
             <div className='h-9 w-9 rounded-3xl bg-white relative overflow-hidden' >
                 {
                     data?.members[0]?.profilePicture ? (
