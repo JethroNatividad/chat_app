@@ -94,4 +94,21 @@ export const searchUsers = async (search: string) => {
         if (user.data()) res.push(user.data())
     })
     return res
-} 
+}
+
+export const populateUserId = async (userId: string) => {
+    const user = (await getDoc(userRef(userId))).data()
+    if (!user) return null
+    return user
+}
+
+export const populateUserIds = async (userIds: string[]) => {
+    const users = userIds.map(
+        async (userId) => {
+            const user = await populateUserId(userId)
+            if (!user) return null
+            return user
+        }
+    )
+    return users
+}
