@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { searchUsers } from '../lib/functions/user'
 import { User } from '../types/User'
+import UserSearchResult from './UserSearchResult'
 
 type Props = {}
 
@@ -30,15 +31,7 @@ const SearchBar = (props: Props) => {
 
             <div className='absolute top-14 left-0 w-full'>
                 {searchResults.map((user) => (
-                    <div className='flex bg-gray-100 cursor-pointer hover:bg-gray-200 px-3 py-2 items-center space-x-2 '>
-                        <div className='h-10 w-10 rounded-3xl bg-white relative overflow-hidden'>
-                            <Image src={user.profilePicture} layout="fill" objectFit='cover' />
-                        </div>
-                        <div className='flex items-center space-x-1'>
-                            <p className='text-white font-semibold text-md'>{user.username}</p>
-                            <p className='text-gray-50 font-semibold text-md'>#{user.uniqueNumber}</p>
-                        </div>
-                    </div>
+                    <UserSearchResult key={user.uid} profilePicture={user.profilePicture} username={user.username} uniqueNumber={user.uniqueNumber} />
                 ))}
             </div>
         </div>
