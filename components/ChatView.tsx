@@ -1,6 +1,7 @@
 import { PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
 import { onSnapshot } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import { sendMessage } from '../lib/functions/chats'
 import { messagesRef } from '../lib/refs/Chats'
 import { ChatGroup, Message as MessageType } from '../types/Chats'
 import Message from './Message'
@@ -34,6 +35,11 @@ const ChatView = ({ openChatGroupId }: Props) => {
         }
     }, [])
 
+    const handleSendMessage = async () => {
+        await sendMessage(openChatGroupId, input)
+        setInput('')
+    }
+
     return (
         <div className='h-full w-full bg-primary-dark flex flex-col'>
             {/* Header */}
@@ -55,7 +61,7 @@ const ChatView = ({ openChatGroupId }: Props) => {
             <div className='h-16 px-5 flex items-center'>
                 <div className='bg-gray-500 h-2/3 shadow-lg w-full rounded-lg overflow-hidden flex px-2 items-center'>
                     <input value={input} onChange={handleInputChange} className='w-full h-full outline-none bg-inherit text-white placeholder:text-white' type='text' placeholder='Type a message' />
-                    <div className='h-9 w-9 rotate-90 text-white cursor-pointer'>
+                    <div onClick={handleSendMessage} className='h-9 w-9 rotate-90 text-white cursor-pointer'>
                         <PaperAirplaneIcon />
                     </div>
                 </div>
