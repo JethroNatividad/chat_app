@@ -8,7 +8,7 @@ import Menu from '../components/Menu'
 import { auth } from '../lib/firebase'
 
 const Home: NextPage = () => {
-  const [openChatGroupId, setOpenChatGroupId] = useState<string | null>('a')
+  const [openChatGroupId, setOpenChatGroupId] = useState<string | null>(null)
   const router = useRouter()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -32,7 +32,15 @@ const Home: NextPage = () => {
           <Menu openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
         </div>
         <div className='flex-1 h-full'>
-          <ChatView openChatGroupId={openChatGroupId} />
+          {
+            openChatGroupId === null ? (
+              <div className='h-full w-full bg-primary-dark flex items-center justify-center'>
+                <h1 className='text-white text-lg font-semibold'>Open or start a new conversation</h1>
+              </div>
+            ) : (
+              <ChatView openChatGroupId={openChatGroupId} />
+            )
+          }
         </div>
 
       </main>

@@ -7,16 +7,10 @@ import { ChatGroup, Message as MessageType } from '../types/Chats'
 import Message from './Message'
 
 type Props = {
-    openChatGroupId: string | null
+    openChatGroupId: string
 }
 
 const ChatView = ({ openChatGroupId }: Props) => {
-
-    if (openChatGroupId === null) return (
-        <div className='h-full w-full bg-primary-dark flex items-center justify-center'>
-            <h1 className='text-white text-lg font-semibold'>Open or start a new conversation</h1>
-        </div>
-    )
 
     const [messages, setMessages] = useState<MessageType[]>([])
     const [input, setInput] = useState<string>('')
