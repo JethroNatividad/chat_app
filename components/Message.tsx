@@ -1,7 +1,10 @@
 import React from 'react'
 
 type Props = {
-
+    timestamp: string
+    message: string
+    username: string
+    profilePicture: string
 }
 
 const Message = (props: Props) => {
