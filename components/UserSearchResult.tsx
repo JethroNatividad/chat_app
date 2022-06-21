@@ -11,14 +11,8 @@ type Props = {
 }
 
 const UserSearchResult = ({ profilePicture, uniqueNumber, username, userId }: Props) => {
-    const currentUser = useUser()
-
     const handleClick = async () => {
-        console.log('clicked')
-        if (currentUser) {
-            console.log('HERE')
-            await createChatGroup([userId, currentUser.uid])
-        }
+        await createChatGroup([userId])
     }
 
     return (
