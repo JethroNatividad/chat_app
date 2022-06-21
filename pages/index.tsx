@@ -2,12 +2,13 @@ import { onAuthStateChanged } from 'firebase/auth'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ChatView from '../components/ChatView'
 import Menu from '../components/Menu'
 import { auth } from '../lib/firebase'
 
 const Home: NextPage = () => {
+  const [openChatGroupId, setOpenChatGroupId] = useState<string | null>(null)
   const router = useRouter()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -31,7 +32,7 @@ const Home: NextPage = () => {
           <Menu />
         </div>
         <div className='flex-1 h-full'>
-          <ChatView />
+          <ChatView openChatGroupId={openChatGroupId} />
         </div>
 
       </main>
