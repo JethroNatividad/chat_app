@@ -8,7 +8,7 @@ import Menu from '../components/Menu'
 import { auth } from '../lib/firebase'
 
 const Home: NextPage = () => {
-  const [openChatGroupId, setOpenChatGroupId] = useState<string | null>(null)
+  const [openChatGroupId, setOpenChatGroupId] = useState<string | null>('a')
   const router = useRouter()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
