@@ -1,10 +1,10 @@
+import { FieldValue } from 'firebase/firestore'
 import React from 'react'
 
 type Props = {
-    timestamp: string
+    timestamp: FieldValue
     message: string
-    username: string
-    profilePicture: string
+    userId: string
 }
 
 const Message = (props: Props) => {

@@ -1,17 +1,34 @@
 import { PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
-import React from 'react'
+import { onSnapshot } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
+import { messagesRef } from '../lib/refs/Chats'
+import { ChatGroup, Message as MessageType } from '../types/Chats'
 import Message from './Message'
 
 type Props = {
     openChatGroupId: string | null
 }
 
-const ChatView = (props: Props) => {
-    if (props.openChatGroupId === null) return (
+const ChatView = ({ openChatGroupId }: Props) => {
+
+    if (openChatGroupId === null) return (
         <div className='h-full w-full bg-primary-dark flex items-center justify-center'>
             <h1 className='text-white text-lg font-semibold'>Open or start a new conversation</h1>
         </div>
     )
+
+    const [messages, setMessages] = useState<MessageType[]>([])
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(messagesRef(openChatGroupId), (snapshot) => {
+            const data = snapshot.docs.map(doc => doc.data() as MessageType)
+            setMessages(data)
+        })
+        return () => {
+            unsubscribe()
+        }
+    }, [])
+
     return (
         <div className='h-full w-full bg-primary-dark flex flex-col'>
             {/* Header */}
@@ -24,7 +41,9 @@ const ChatView = (props: Props) => {
 
             {/* Messages */}
             <div className='flex-1 overflow-y-scroll'>
-                <Message username={'haha'} profilePicture={''} message={'Hello'} timestamp={'idk'} />
+                {messages.map((message) => (
+                    <Message userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
+                ))}
             </div>
 
             {/* Chat input */}
