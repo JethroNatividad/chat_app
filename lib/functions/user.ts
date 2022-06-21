@@ -103,11 +103,11 @@ export const populateUserId = async (userId: string) => {
 }
 
 export const populateUserIds = async (userIds: string[]) => {
-    const users = userIds.map(
+    const users: User[] = []
+    userIds.forEach(
         async (userId) => {
             const user = await populateUserId(userId)
-            if (!user) return null
-            return user
+            if (user) users.push(user)
         }
     )
     return users
