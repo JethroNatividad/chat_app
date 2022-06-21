@@ -33,11 +33,11 @@ const ChatView = ({ openChatGroupId }: Props) => {
         return () => {
             unsubscribe()
         }
-    }, [])
+    }, [openChatGroupId])
 
     const handleSendMessage = async () => {
-        await sendMessage(openChatGroupId, input)
         setInput('')
+        await sendMessage(openChatGroupId, input)
     }
 
     return (
