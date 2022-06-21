@@ -2,6 +2,7 @@ import { getDoc, onSnapshot } from 'firebase/firestore'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import useUser from '../hooks/useUser'
+import { auth } from '../lib/firebase'
 import { populateUserId, populateUserIds } from '../lib/functions/user'
 import { chatGroupRef } from '../lib/refs/Chats'
 import { userRef } from '../lib/refs/User'
@@ -15,6 +16,7 @@ type Props = {
 }
 
 const ChatItem = ({ chatGroupId, openChatGroupId, setOpenChatGroupId }: Props) => {
+    const currentUser = auth.currentUser
     const [data, setData] = useState<PopulatedChatGroup>()
     const active = openChatGroupId === chatGroupId
     const handleClick = () => {
@@ -24,8 +26,11 @@ const ChatItem = ({ chatGroupId, openChatGroupId, setOpenChatGroupId }: Props) =
     useEffect(() => {
         const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
             const data = snapshot.data()
-            if (data) {
-                const currentMember = await populateUserId(data.members[0])
+
+            if (data && currentUser) {
+
+                const filteredMembers = data.members.filter((id) => id !== currentUser.uid)
+                const currentMember = await populateUserId(filteredMembers[0])
                 console.log(currentMember, 'members')
                 if (currentMember)
                     setData({ ...data, members: [currentMember] })
