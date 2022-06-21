@@ -1,5 +1,5 @@
 import { PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
-import { onSnapshot } from 'firebase/firestore'
+import { onSnapshot, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { sendMessage } from '../lib/functions/chats'
 import { messagesRef } from '../lib/refs/Chats'
@@ -20,7 +20,7 @@ const ChatView = ({ openChatGroupId }: Props) => {
     }
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(messagesRef(openChatGroupId), (snapshot) => {
+        const unsubscribe = onSnapshot(query(messagesRef(openChatGroupId), orderBy('sentAt', 'asc')), (snapshot) => {
             const data = snapshot.docs.map(doc => doc.data() as MessageType)
             setMessages(data)
         })
