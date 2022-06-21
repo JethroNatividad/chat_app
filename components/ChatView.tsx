@@ -1,5 +1,6 @@
 import { PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
 import React from 'react'
+import Message from './Message'
 
 type Props = {
     openChatGroupId: string | null
@@ -22,8 +23,8 @@ const ChatView = (props: Props) => {
             </div>
 
             {/* Messages */}
-            <div className='flex-1'>
-                Messages
+            <div className='flex-1 overflow-y-scroll'>
+                <Message username={'haha'} profilePicture={''} message={'Hello'} timestamp={'idk'} />
             </div>
 
             {/* Chat input */}
