@@ -53,7 +53,7 @@ const ChatView = ({ openChatGroupId }: Props) => {
             {/* Messages */}
             <div className='flex-1 overflow-y-scroll'>
                 {messages.map((message) => (
-                    <Message userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
+                    <Message key={message.sentAt.toString()} userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
                 ))}
             </div>
 

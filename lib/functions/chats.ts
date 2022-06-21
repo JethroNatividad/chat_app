@@ -1,4 +1,4 @@
-import { addDoc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from "firebase/firestore"
 import { ChatGroup, ChatGroupWithoutId, Message, RecentMessage } from "../../types/Chats"
 import { auth } from "../firebase"
 import { chatGroupRef, chatGroupsRef, messagesRef } from "../refs/Chats"
@@ -16,7 +16,7 @@ export const createChatGroup = async (members: string[]) => {
     const currentUser = auth.currentUser
     if (!currentUser) return
     const chatGroup: ChatGroup = {
-        createdAt: serverTimestamp(),
+        createdAt: Timestamp.now(),
         createdBy: currentUser.uid,
         members,
         recentMessage: null,
@@ -43,7 +43,7 @@ export const sendMessage = async (chatGroupId: string, message: string) => {
     if (!currentUser) return
     const messageData: Message = {
         messageText: message,
-        sentAt: serverTimestamp(),
+        sentAt: Timestamp.now(),
         sentBy: currentUser.uid
     }
     await addDoc(messagesRef(chatGroupId), messageData)

@@ -1,9 +1,9 @@
-import { FieldValue } from "firebase/firestore"
+import { FieldValue, Timestamp } from "firebase/firestore"
 import { User } from "./User"
 
 export type Message = {
     messageText: string
-    sentAt: FieldValue
+    sentAt: Timestamp
     sentBy: string
 }
 
@@ -13,7 +13,7 @@ export type RecentMessage = Message & {
 
 export type ChatGroup = {
     id: string
-    createdAt: FieldValue
+    createdAt: Timestamp
     createdBy: string
     members: string[]
     recentMessage: RecentMessage | null
