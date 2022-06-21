@@ -10,6 +10,7 @@ type Props = {}
 
 const Menu = (props: Props) => {
     const currentUser = useUser()
+    console.log(currentUser)
     const chatGroupIds: string[] = currentUser?.chatGroups ?? []
     return (
         <div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>

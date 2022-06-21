@@ -31,7 +31,7 @@ const SearchBar = (props: Props) => {
 
             <div className='absolute top-14 left-0 w-full'>
                 {searchResults.map((user) => (
-                    <UserSearchResult key={user.uid} profilePicture={user.profilePicture} username={user.username} uniqueNumber={user.uniqueNumber} />
+                    <UserSearchResult key={user.uid} profilePicture={user.profilePicture} username={user.username} uniqueNumber={user.uniqueNumber} userId={user.uid} />
                 ))}
             </div>
         </div>

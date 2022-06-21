@@ -23,6 +23,7 @@ export const createChatGroup = async (members: string[]) => {
     }
     const data = await addDoc(chatGroupsRef, chatGroup)
     await updateDoc(data, { id: data.id })
+    console.log("Chat group created", data)
 }
 
 export const sendMessage = async (chatGroupId: string, message: string) => {
