@@ -1,4 +1,4 @@
-import { UserAddIcon } from '@heroicons/react/solid'
+import { PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
 import React from 'react'
 
 type Props = {
@@ -28,8 +28,11 @@ const ChatView = (props: Props) => {
 
             {/* Chat input */}
             <div className='h-16 px-5 flex items-center'>
-                <div className='bg-gray-500 h-10 shadow-lg w-full rounded-lg overflow-hidden flex px-2'>
+                <div className='bg-gray-500 h-2/3 shadow-lg w-full rounded-lg overflow-hidden flex px-2 items-center'>
                     <input className='w-full h-full outline-none bg-inherit text-white placeholder:text-white' type='text' placeholder='Type a message' />
+                    <div className='h-9 w-9 rotate-90 text-white'>
+                        <PaperAirplaneIcon />
+                    </div>
                 </div>
             </div>
         </div>
