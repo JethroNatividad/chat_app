@@ -28,7 +28,6 @@ const ChatItem = ({ chatGroupId, openChatGroupId, setOpenChatGroupId }: Props) =
             const data = snapshot.data()
 
             if (data && currentUser) {
-
                 const filteredMembers = data.members.filter((id) => id !== currentUser.uid)
                 const currentMember = await populateUserId(filteredMembers[0])
                 console.log(currentMember, 'members')
