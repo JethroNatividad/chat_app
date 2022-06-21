@@ -18,6 +18,11 @@ const ChatView = ({ openChatGroupId }: Props) => {
     )
 
     const [messages, setMessages] = useState<MessageType[]>([])
+    const [input, setInput] = useState<string>('')
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value)
+    }
 
     useEffect(() => {
         const unsubscribe = onSnapshot(messagesRef(openChatGroupId), (snapshot) => {
@@ -49,7 +54,7 @@ const ChatView = ({ openChatGroupId }: Props) => {
             {/* Chat input */}
             <div className='h-16 px-5 flex items-center'>
                 <div className='bg-gray-500 h-2/3 shadow-lg w-full rounded-lg overflow-hidden flex px-2 items-center'>
-                    <input className='w-full h-full outline-none bg-inherit text-white placeholder:text-white' type='text' placeholder='Type a message' />
+                    <input value={input} onChange={handleInputChange} className='w-full h-full outline-none bg-inherit text-white placeholder:text-white' type='text' placeholder='Type a message' />
                     <div className='h-9 w-9 rotate-90 text-white cursor-pointer'>
                         <PaperAirplaneIcon />
                     </div>
