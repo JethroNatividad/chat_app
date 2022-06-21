@@ -2,6 +2,7 @@ import { addDoc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/fir
 import { ChatGroup, ChatGroupWithoutId, Message, RecentMessage } from "../../types/Chats"
 import { auth } from "../firebase"
 import { chatGroupRef, chatGroupsRef, messagesRef } from "../refs/Chats"
+import { userRef } from "../refs/User"
 
 export const populateChatGroups = async (chatGroupIds: string[]) => {
     const chatGroups = chatGroupIds.map(async (chatGroupId: string) => {
@@ -21,9 +22,20 @@ export const createChatGroup = async (members: string[]) => {
         recentMessage: null,
         id: ''
     }
-    const data = await addDoc(chatGroupsRef, chatGroup)
-    await updateDoc(data, { id: data.id })
-    console.log("Chat group created", data)
+    const chatGroupData = await addDoc(chatGroupsRef, chatGroup)
+    await updateDoc(chatGroupData, { id: chatGroupData.id })
+    // add the chatgroup to the user's chatgroups
+    const currentUserData = (await getDoc(userRef(currentUser.uid))).data()
+    if (currentUserData) {
+        await updateDoc(userRef(currentUser.uid), { chatGroups: [...currentUserData.chatGroups, chatGroupData.id] })
+    }
+
+    members.forEach(async (memberId: string) => {
+        const memberData = (await getDoc(userRef(memberId))).data()
+        if (memberData) {
+            await updateDoc(userRef(memberId), { chatGroups: [...memberData.chatGroups, chatGroupData.id] })
+        }
+    })
 }
 
 export const sendMessage = async (chatGroupId: string, message: string) => {
