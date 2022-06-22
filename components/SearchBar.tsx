@@ -4,9 +4,12 @@ import { searchUsers } from '../lib/functions/user'
 import { User } from '../types/User'
 import UserSearchResult from './UserSearchResult'
 
-type Props = {}
+type Props = {
+    openChatGroupId: string | null
+    setOpenChatGroupId: (chatGroupId: string) => void
+}
 
-const SearchBar = (props: Props) => {
+const SearchBar = ({ setOpenChatGroupId }: Props) => {
     const [searchText, setSearchText] = useState<string>('')
     const [searchResults, setSearchResults] = useState<User[]>([])
     const [timeouts, setTimeouts] = useState<NodeJS.Timeout>()
@@ -39,7 +42,7 @@ const SearchBar = (props: Props) => {
 
             <div className='absolute top-14 left-0 w-full z-10'>
                 {searchResults.map((user) => (
-                    <UserSearchResult key={user.uid} profilePicture={user.profilePicture} username={user.username} uniqueNumber={user.uniqueNumber} userId={user.uid} />
+                    <UserSearchResult setSearchResults={setSearchResults} setOpenChatGroupId={setOpenChatGroupId} key={user.uid} profilePicture={user.profilePicture} username={user.username} uniqueNumber={user.uniqueNumber} userId={user.uid} />
                 ))}
             </div>
         </div>

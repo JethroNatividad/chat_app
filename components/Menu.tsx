@@ -19,7 +19,7 @@ const Menu = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
         <div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
             {/* Header */}
             <div className='w-full flex flex-col justify-center px-2 shadow-md h-16'>
-                <SearchBar />
+                <SearchBar openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
             </div>
 
             {/* Chat list */}
