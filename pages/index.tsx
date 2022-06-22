@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className='h-screen flex'>
-        <div className='w-1/3 h-full'>
+        <div className={`md:w-1/3 h-full ${openChatGroupId !== null && 'hidden'}`}>
           <Menu openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
         </div>
         <div className='flex-1 h-full'>
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
                 <h1 className='text-white text-lg font-semibold'>Open or start a new conversation</h1>
               </div>
             ) : (
-              <ChatView openChatGroupId={openChatGroupId} />
+              <ChatView openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
             )
           }
         </div>
