@@ -2,21 +2,25 @@ import Image from 'next/image'
 import React from 'react'
 import useUser from '../hooks/useUser'
 import { checkIfAlreadyInChatGroup, createChatGroup } from '../lib/functions/chats'
+import { User } from '../types/User'
 
 type Props = {
     profilePicture: string
     username: string
     uniqueNumber: number
     userId: string
+    setOpenChatGroupId: (chatGroupId: string) => void
+    setSearchResults: (users: User[]) => void
 }
 
-const UserSearchResult = ({ profilePicture, uniqueNumber, username, userId }: Props) => {
+const UserSearchResult = ({ profilePicture, uniqueNumber, username, userId, setOpenChatGroupId, setSearchResults }: Props) => {
     const handleClick = async () => {
         const alreadyInChatGroup = await checkIfAlreadyInChatGroup(userId)
-        console.log('already in chat group' + alreadyInChatGroup)
-        if (alreadyInChatGroup) return
-
-        // return await createChatGroup([userId])
+        if (alreadyInChatGroup) {
+            setSearchResults([])
+            return setOpenChatGroupId(alreadyInChatGroup)
+        }
+        return await createChatGroup([userId])
     }
 
     return (
