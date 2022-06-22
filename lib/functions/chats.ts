@@ -6,11 +6,10 @@ import { userRef } from "../refs/User"
 import { populateUserId } from "./user"
 
 export const populateChatGroups = async (chatGroupIds: string[]) => {
-    const chatGroups: ChatGroup[] = []
-    chatGroupIds.forEach(async (chatGroupId: string) => {
-        const chatGroup = (await getDoc(chatGroupRef(chatGroupId))).data()
-        if (chatGroup) chatGroups.push(chatGroup)
-    })
+    const chatGroups = await Promise.all(chatGroupIds.map(async id => {
+        const chatGroup = (await getDoc(chatGroupRef(id))).data() as ChatGroup
+        return chatGroup
+    }))
     return chatGroups
 }
 
@@ -19,11 +18,11 @@ export const checkIfAlreadyInChatGroup = async (userId: string) => {
     if (!currentUser) return
 
     // check if the current user and the member is in the same group
-    const memberData = await populateUserId(userId)
-    if (!memberData) return
-    const memberChatGroupIds = memberData.chatGroups
-    const memberChatGroupData = await populateChatGroups(memberChatGroupIds)
-    const alreadyInGroup = memberChatGroupData.find((chatGroup: ChatGroup) => {
+    const currentUserData = await populateUserId(currentUser.uid)
+    if (!currentUserData) return
+    const currentUserDataChatGroupIds = currentUserData.chatGroups
+    const currentUserDataChatGroupData = await populateChatGroups(currentUserDataChatGroupIds)
+    const alreadyInGroup = currentUserDataChatGroupData.find((chatGroup: ChatGroup) => {
         return chatGroup.members.includes(currentUser.uid)
     })
     if (alreadyInGroup) return alreadyInGroup.id
