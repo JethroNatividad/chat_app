@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <div className={`w-full md:w-1/3 h-full md:relative fixed z-10 top-0 left-0 transition-all duration-300 ${openChatGroupId !== null ? '-translate-x-full' : 'translate-x-0'} md:translate-x-0`}>
           <Menu openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
         </div>
-        <div className={`flex-1 h-full ${openChatGroupId !== null ? 'flex' : 'hidden'} md:flex`}>
+        <div className={`flex-1 w-full h-full md:relative fixed z-10 top-0 left-0 transition-all duration-300 ${openChatGroupId !== null ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0`}>
           {
             openChatGroupId === null ? (
               <div className='h-full w-full bg-primary-dark flex items-center justify-center'>
