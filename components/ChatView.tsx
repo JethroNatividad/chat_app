@@ -1,9 +1,11 @@
 import { ArrowLeftIcon, MenuIcon, PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
 import { onSnapshot, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import { auth } from '../lib/firebase'
 import { sendMessage } from '../lib/functions/chats'
-import { messagesRef } from '../lib/refs/Chats'
-import { ChatGroup, Message as MessageType } from '../types/Chats'
+import { populateUserId } from '../lib/functions/user'
+import { chatGroupRef, messagesRef } from '../lib/refs/Chats'
+import { ChatGroup, Message as MessageType, PopulatedChatGroup } from '../types/Chats'
 import Message from './Message'
 
 type Props = {
@@ -12,13 +14,31 @@ type Props = {
 }
 
 const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
-
+    const currentUser = auth.currentUser
     const [messages, setMessages] = useState<MessageType[]>([])
     const [input, setInput] = useState<string>('')
+    const [data, setData] = useState<PopulatedChatGroup>()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value)
     }
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(chatGroupRef(openChatGroupId), async (snapshot) => {
+            const data = snapshot.data()
+
+            if (data && currentUser) {
+                const filteredMembers = data.members.filter((id) => id !== currentUser.uid)
+                const currentMember = await populateUserId(filteredMembers[0])
+                console.log(currentMember, 'members')
+                if (currentMember)
+                    setData({ ...data, members: [currentMember] })
+            }
+        })
+        return () => {
+            unsubscribe()
+        }
+    }, [openChatGroupId])
 
     useEffect(() => {
         const unsubscribe = onSnapshot(query(messagesRef(openChatGroupId), orderBy('sentAt', 'asc')), (snapshot) => {
@@ -43,7 +63,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
                     <div className="flex md:hidden text-white cursor-pointer" onClick={() => setOpenChatGroupId(null)}>
                         <ArrowLeftIcon className='h-8 w-8' />
                     </div>
-                    <h1 className='text-white text-xl font-semibold'>Username</h1>
+                    <h1 className='text-white text-xl font-semibold'>{data?.members[0]?.username}</h1>
                 </div>
                 <div className='h-10 w-10 text-white'>
                     <UserAddIcon />
