@@ -53,7 +53,8 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
         }
     }, [openChatGroupId])
 
-    const handleSendMessage = async () => {
+    const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         setInput('')
         await sendMessage(openChatGroupId, input)
     }
@@ -82,12 +83,12 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
 
             {/* Chat input */}
             <div className='h-16 px-5 flex items-center'>
-                <div className='bg-gray-500 h-2/3 shadow-lg w-full rounded-lg overflow-hidden flex px-2 items-center'>
+                <form className='bg-gray-500 h-2/3 shadow-lg w-full rounded-lg overflow-hidden flex px-2 items-center' onSubmit={handleSendMessage}>
                     <input value={input} onChange={handleInputChange} className='w-full h-full outline-none bg-inherit text-white placeholder:text-white' type='text' placeholder='Type a message' />
-                    <div onClick={handleSendMessage} className='h-9 w-9 rotate-90 text-white cursor-pointer'>
-                        <PaperAirplaneIcon />
-                    </div>
-                </div>
+                    <button type="submit" >
+                        <PaperAirplaneIcon className='h-9 w-9 rotate-90 text-white' />
+                    </button>
+                </form>
             </div>
         </div>
     )
