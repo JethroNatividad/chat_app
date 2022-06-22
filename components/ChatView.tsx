@@ -1,4 +1,4 @@
-import { PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
+import { ArrowLeftIcon, MenuIcon, PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
 import { onSnapshot, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { sendMessage } from '../lib/functions/chats'
@@ -8,9 +8,10 @@ import Message from './Message'
 
 type Props = {
     openChatGroupId: string
+    setOpenChatGroupId: (chatGroupId: string | null) => void
 }
 
-const ChatView = ({ openChatGroupId }: Props) => {
+const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
 
     const [messages, setMessages] = useState<MessageType[]>([])
     const [input, setInput] = useState<string>('')
@@ -38,7 +39,12 @@ const ChatView = ({ openChatGroupId }: Props) => {
         <div className='h-full w-full bg-primary-dark flex flex-col'>
             {/* Header */}
             <div className='h-16 w-full shadow-md flex items-center px-5 justify-between'>
-                <h1 className='text-white text-xl font-semibold'>Username</h1>
+                <div className='flex items-center space-x-5'>
+                    <div className="flex md:hidden text-white cursor-pointer" onClick={() => setOpenChatGroupId(null)}>
+                        <ArrowLeftIcon className='h-8 w-8' />
+                    </div>
+                    <h1 className='text-white text-xl font-semibold'>Username</h1>
+                </div>
                 <div className='h-10 w-10 text-white'>
                     <UserAddIcon />
                 </div>
