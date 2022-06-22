@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className='h-screen flex'>
-        <div className={`w-full md:w-1/3 h-full ${openChatGroupId !== null && 'hidden'} md:flex`}>
+        <div className={`w-full md:w-1/3 h-full md:relative fixed z-10 top-0 left-0 transition-all duration-300 ${openChatGroupId !== null ? '-translate-x-full' : 'translate-x-0'} md:translate-x-0`}>
           <Menu openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
         </div>
         <div className={`flex-1 h-full ${openChatGroupId !== null ? 'flex' : 'hidden'} md:flex`}>
