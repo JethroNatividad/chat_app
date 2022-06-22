@@ -6,7 +6,7 @@ import { auth } from '../lib/firebase'
 
 type Props = {}
 
-const signup = (props: Props) => {
+const SignupPage = (props: Props) => {
   const router = useRouter()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -24,4 +24,4 @@ const signup = (props: Props) => {
   )
 }
 
-export default signup
+export default SignupPage

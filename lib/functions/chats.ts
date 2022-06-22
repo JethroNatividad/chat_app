@@ -18,7 +18,7 @@ export const createChatGroup = async (members: string[]) => {
     const chatGroup: ChatGroup = {
         createdAt: Timestamp.now(),
         createdBy: currentUser.uid,
-        members,
+        members: [...members, currentUser.uid],
         recentMessage: null,
         id: ''
     }
