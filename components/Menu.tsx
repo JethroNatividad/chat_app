@@ -40,8 +40,8 @@ const Menu = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
                             ) : null
                         }
                     </div>
-                    <div className='flex justify-center items-center space-x-2'>
-                        <p className='text-white font-semibold text-md'>{currentUser?.username}</p>
+                    <div className='flex flex-1 justify-center items-center space-x-2'>
+                        <p className='text-white w-fit font-semibold text-md'>{currentUser?.username}</p>
                         <p className='text-md font-semibold text-gray-500'>#{currentUser?.uniqueNumber}</p>
                     </div>
                 </div>
