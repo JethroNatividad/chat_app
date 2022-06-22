@@ -3,18 +3,36 @@ import { ChatGroup, ChatGroupWithoutId, Message, RecentMessage } from "../../typ
 import { auth } from "../firebase"
 import { chatGroupRef, chatGroupsRef, messagesRef } from "../refs/Chats"
 import { userRef } from "../refs/User"
+import { populateUserId } from "./user"
 
 export const populateChatGroups = async (chatGroupIds: string[]) => {
-    const chatGroups = chatGroupIds.map(async (chatGroupId: string) => {
+    const chatGroups: ChatGroup[] = []
+    chatGroupIds.forEach(async (chatGroupId: string) => {
         const chatGroup = (await getDoc(chatGroupRef(chatGroupId))).data()
-        if (chatGroup) return chatGroup
+        if (chatGroup) chatGroups.push(chatGroup)
     })
     return chatGroups
+}
+
+export const checkIfAlreadyInChatGroup = async (userId: string) => {
+    const currentUser = auth.currentUser
+    if (!currentUser) return
+
+    // check if the current user and the member is in the same group
+    const memberData = await populateUserId(userId)
+    if (!memberData) return
+    const memberChatGroupIds = memberData.chatGroups
+    const memberChatGroupData = await populateChatGroups(memberChatGroupIds)
+    const alreadyInGroup = memberChatGroupData.find((chatGroup: ChatGroup) => {
+        return chatGroup.members.includes(currentUser.uid)
+    })
+    if (alreadyInGroup) return alreadyInGroup.id
 }
 
 export const createChatGroup = async (members: string[]) => {
     const currentUser = auth.currentUser
     if (!currentUser) return
+
     const chatGroup: ChatGroup = {
         createdAt: Timestamp.now(),
         createdBy: currentUser.uid,
