@@ -60,7 +60,7 @@ const Signup = (props: Props) => {
                             />
                             <div className='flex space-x-3'>
                                 <input
-                                    className='input-dark flex-1'
+                                    className='input-dark w-1/2'
                                     type="password"
                                     name="password"
                                     onChange={handleChange}
@@ -69,7 +69,7 @@ const Signup = (props: Props) => {
                                     placeholder='Password'
                                 />
                                 <input
-                                    className='input-dark flex-1'
+                                    className='input-dark w-1/2'
                                     type="password"
                                     name="repeat"
                                     onChange={handleChange}
