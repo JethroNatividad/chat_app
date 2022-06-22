@@ -39,7 +39,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
         <div className='h-full w-full bg-primary-dark flex flex-col'>
             {/* Header */}
             <div className='h-16 w-full shadow-md flex items-center px-5 justify-between'>
-                <div className='flex items-center space-x-5'>
+                <div className='flex items-center space-x-5 md:space-x-0'>
                     <div className="flex md:hidden text-white cursor-pointer" onClick={() => setOpenChatGroupId(null)}>
                         <ArrowLeftIcon className='h-8 w-8' />
                     </div>
