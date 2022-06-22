@@ -28,10 +28,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main className='h-screen flex'>
-        <div className={`md:w-1/3 h-full ${openChatGroupId !== null && 'hidden'}`}>
+        <div className={`w-full md:w-1/3 h-full ${openChatGroupId !== null && 'hidden'} md:flex`}>
           <Menu openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
         </div>
-        <div className='flex-1 h-full'>
+        <div className={`flex-1 h-full ${openChatGroupId !== null ? 'flex' : 'hidden'} md:flex`}>
           {
             openChatGroupId === null ? (
               <div className='h-full w-full bg-primary-dark flex items-center justify-center'>
