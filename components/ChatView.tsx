@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, MenuIcon, PaperAirplaneIcon, UserAddIcon } from '@heroicons/react/solid'
 import { onSnapshot, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import useChatScroll from '../hooks/useChatScoll'
 import { auth } from '../lib/firebase'
 import { sendMessage } from '../lib/functions/chats'
 import { populateUserId } from '../lib/functions/user'
@@ -18,6 +19,8 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
     const [messages, setMessages] = useState<MessageType[]>([])
     const [input, setInput] = useState<string>('')
     const [data, setData] = useState<PopulatedChatGroup>()
+    const ref = useChatScroll(messages)
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value)
@@ -71,7 +74,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
             </div>
 
             {/* Messages */}
-            <div className='flex-1 overflow-y-scroll'>
+            <div ref={ref} className='flex-1 overflow-y-scroll'>
                 {messages.map((message) => (
                     <Message key={message.sentAt.toString()} userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
                 ))}
