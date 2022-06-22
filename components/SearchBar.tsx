@@ -41,7 +41,6 @@ const SearchBar = (props: Props) => {
                 {searchResults.map((user) => (
                     <UserSearchResult key={user.uid} profilePicture={user.profilePicture} username={user.username} uniqueNumber={user.uniqueNumber} userId={user.uid} />
                 ))}
-                {JSON.stringify(searchResults)}
             </div>
         </div>
     )
