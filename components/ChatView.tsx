@@ -7,6 +7,7 @@ import { sendMessage } from '../lib/functions/chats'
 import { populateUserId } from '../lib/functions/user'
 import { chatGroupRef, messagesRef } from '../lib/refs/Chats'
 import { ChatGroup, Message as MessageType, PopulatedChatGroup } from '../types/Chats'
+import { User } from '../types/User'
 import Message from './Message'
 
 type Props = {
@@ -31,11 +32,20 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
             const data = snapshot.data()
 
             if (data && currentUser) {
-                const filteredMembers = data.members.filter((id) => id !== currentUser.uid)
-                const currentMember = await populateUserId(filteredMembers[0])
-                console.log(currentMember, 'members')
-                if (currentMember)
-                    setData({ ...data, members: [currentMember] })
+                // const filteredMembers = data.members.filter((id) => id !== currentUser.uid)
+                // const currentMember = await populateUserId(filteredMembers[0])
+                const members: User[] = []
+
+                data.members.forEach(async (id) => {
+                    if (id !== currentUser.uid) {
+                        const member = await populateUserId(id)
+                        if (member)
+                            members.push(member)
+                    }
+                })
+                console.log(members, 'members')
+                if (members)
+                    setData({ ...data, members })
             }
         })
         return () => {
@@ -77,7 +87,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
             {/* Messages */}
             <div ref={ref} className='flex-1 overflow-y-scroll'>
                 {messages.map((message) => (
-                    <Message key={message.sentAt.toString()} userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
+                    <Message key={message.sentAt.toString()} profilePicture={message.sentBy === currentUser?.uid ? currentUser.photoURL : data?.members.find(user => user.uid === message.sentBy)?.profilePicture} userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
                 ))}
             </div>
 

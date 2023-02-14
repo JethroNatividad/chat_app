@@ -9,9 +9,10 @@ type Props = {
     timestamp: Timestamp
     message: string
     userId: string
+    profilePicture: string | null | undefined
 }
 
-const Message = ({ message, userId, timestamp }: Props) => {
+const Message = ({ message, userId, timestamp, profilePicture }: Props) => {
     const [user, setUser] = useState<User | null>()
 
     useEffect(() => {
@@ -28,8 +29,8 @@ const Message = ({ message, userId, timestamp }: Props) => {
         <div className='flex space-x-2 px-5 py-1 hover:bg-gray-300 group'>
             <div className='h-9 w-9 rounded-3xl bg-white relative overflow-hidden' >
                 {
-                    user?.profilePicture ? (
-                        <Image src={user?.profilePicture} layout="fill" objectFit='cover' />
+                    profilePicture ? (
+                        <Image src={profilePicture} layout="fill" objectFit='cover' />
                     ) : null
                 }
             </div>
