@@ -37,11 +37,11 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
                 const members: User[] = []
 
                 data.members.forEach(async (id) => {
-                    if (id !== currentUser.uid) {
+                    // if (id !== currentUser.uid) {
                         const member = await populateUserId(id)
                         if (member)
                             members.push(member)
-                    }
+                    // }
                 })
                 console.log(members, 'members')
                 if (members)
@@ -77,7 +77,12 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
                     <div className="flex md:hidden text-white cursor-pointer" onClick={() => setOpenChatGroupId(null)}>
                         <ArrowLeftIcon className='h-8 w-8' />
                     </div>
-                    <h1 className='text-white text-xl font-semibold'>{data?.members[0]?.username}</h1>
+                    <h1 className='text-white text-xl font-semibold'>
+                        {data?.members.map(member => {
+                            if(member.uid !== currentUser?.uid)
+                            return member.username
+                        })}
+                    </h1>
                 </div>
                 <div className='h-10 w-10 text-white'>
                     <UserAddIcon />
@@ -87,7 +92,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
             {/* Messages */}
             <div ref={ref} className='flex-1 overflow-y-scroll'>
                 {messages.map((message) => (
-                    <Message key={message.sentAt.toString()} profilePicture={message.sentBy === currentUser?.uid ? currentUser.photoURL : data?.members.find(user => user.uid === message.sentBy)?.profilePicture} userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
+                    <Message username={data?.members.find(user => user.uid === message.sentBy)?.username ?? ''} key={message.sentAt.toString()} profilePicture={message.sentBy === currentUser?.uid ? currentUser.photoURL : data?.members.find(user => user.uid === message.sentBy)?.profilePicture} userId={message.sentBy} message={message.messageText} timestamp={message.sentAt} />
                 ))}
             </div>
 

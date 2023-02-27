@@ -10,19 +10,10 @@ type Props = {
     message: string
     userId: string
     profilePicture: string | null | undefined
+    username: string
 }
 
-const Message = ({ message, userId, timestamp, profilePicture }: Props) => {
-    const [user, setUser] = useState<User | null>()
-
-    useEffect(() => {
-        const fn = async () => {
-            const userData = await populateUserId(userId)
-            setUser(userData)
-        }
-        fn()
-    }, [])
-
+const Message = ({ message, userId, timestamp, profilePicture, username }: Props) => {
 
 
     return (
@@ -36,7 +27,7 @@ const Message = ({ message, userId, timestamp, profilePicture }: Props) => {
             </div>
             <div className='flex-1'>
                 <div className='flex items-baseline space-x-2'>
-                    <h1 className='text-white text-lg'>{user?.username}</h1>
+                    <h1 className='text-white text-lg'>{username}</h1>
                     <p className='text-xs text-slate-300'>{moment(timestamp.toDate()).calendar()}</p>
                 </div>
                 <div className='text-slate-200'>{message}</div>
