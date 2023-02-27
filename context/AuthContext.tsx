@@ -1,12 +1,22 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { setDoc } from 'firebase/firestore'
+import { useRouter } from 'next/router'
 import { createContext, useState, useEffect, useContext } from 'react'
 import { auth } from '../lib/firebase'
+import { populateUserId } from '../lib/functions/user'
 import { generateUniqueNumber, getErrorMessage } from '../lib/helpers'
 import { userRef } from '../lib/refs/User'
+import {User} from '../types/User'
 
+interface IAuthContext {
+    user: User | null;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    register: (username: string, email: string, password: string) => Promise<void>;
+    userLoading: boolean;
 
-const AuthContext = createContext({
+}
+const AuthContext = createContext<IAuthContext>({
     user: null,
     login: async (email: string, password: string) => {},
     logout: async () => {},
@@ -15,12 +25,24 @@ const AuthContext = createContext({
 })
 
 const AuthProvider:React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState<User | null>(null)
     const [userLoading, setUserLoading] = useState(true)
+    const router = useRouter()
 
 
     useEffect(() => {
-        
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (!user) return router.push('/login')
+            
+            const userData = await populateUserId(user.uid)
+            if(!userData) return router.push('/login')
+
+            setUser(userData)
+            setUserLoading(false)
+          })
+          return () => {
+            unsubscribe()
+          }
     }, [])
 
     async function login(email: string, password: string) {
