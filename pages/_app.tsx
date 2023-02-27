@@ -2,10 +2,11 @@ import '../styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify';
+import AuthProvider from '../context/AuthContext';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <div>
+  return <AuthProvider>
     <Component {...pageProps} />
     <ToastContainer position="top-right"
       autoClose={2000}
@@ -19,8 +20,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       toastClassName={
         "relative flex bg-primary-dark shadow-lg p-2 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer text-white"
       }
-    />
-  </div>
+      />
+      </AuthProvider>
 }
 
 export default MyApp
