@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { setDoc } from 'firebase/firestore'
 import { createContext, useState, useEffect, useContext } from 'react'
 import { auth } from '../lib/firebase'
@@ -8,9 +8,9 @@ import { userRef } from '../lib/refs/User'
 
 const AuthContext = createContext({
     user: null,
-    login: async () => {},
+    login: async (email: string, password: string) => {},
     logout: async () => {},
-    register: async () => {},
+    register: async (username: string, email: string, password: string) => {},
     userLoading: true,
 })
 
@@ -23,7 +23,13 @@ const AuthProvider:React.FC<{ children: React.ReactNode }> = ({ children }) => {
         
     }, [])
 
-    async function login({ email, password }) {
+    async function login(email: string, password: string) {
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+        } catch (error: unknown) {
+            const message: string = getErrorMessage(error)
+            throw new Error(message)
+        }
     }
 
     async function register(username: string, email: string, password: string) {
@@ -43,15 +49,14 @@ const AuthProvider:React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 profilePicture: 'https://firebasestorage.googleapis.com/v0/b/chat-app-a5f37.appspot.com/o/profilepictures%2Fimages.png?alt=media&token=d77e1e3d-aff4-4e63-8532-12606736f3dc'
             })
     
-            return null
         } catch (error: unknown) {
             const message: string = getErrorMessage(error)
-            return message
+            throw new Error(message)
         }
     }
 
     async function logout() {
-    
+        await signOut(auth)
     }
 
     return (
