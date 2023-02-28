@@ -2,7 +2,7 @@ import { signOut } from 'firebase/auth'
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 import { signin } from '../lib/auth'
 import { signInWithGoogle } from '../lib/auth/withProviders'
 import { auth } from '../lib/firebase'
@@ -22,9 +22,9 @@ const Login = (props: Props) => {
                     const error = await signin(email, password)
                     if (error) {
                         setSubmitting(false)
-                        return toast.error(error)
+                        // return toast.error(error)
                     }
-                    toast.success("Welcome back")
+                    // toast.success("Welcome back")
                     setSubmitting(false)
                 }}>
                     {({
