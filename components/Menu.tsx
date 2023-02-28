@@ -6,12 +6,7 @@ import { ChatGroup } from '../types/Chats'
 import SearchBar from './SearchBar'
 import Image from 'next/image'
 
-type Props = {
-    openChatGroupId: string | null
-    setOpenChatGroupId: (chatGroupId: string) => void
-}
-
-const Menu = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
+const Menu = () => {
     const currentUser = useUser()
     console.log(currentUser)
     const chatGroupIds: string[] = currentUser?.chatGroups ?? []
@@ -19,14 +14,14 @@ const Menu = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
         <div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
             {/* Header */}
             <div className='w-full flex flex-col justify-center px-2 shadow-md h-16'>
-                <SearchBar openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
+                {/* <SearchBar openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} /> */}
             </div>
 
             {/* Chat list */}
             <div className='flex-1 p-2'>
-                {chatGroupIds.map((chatGroupId) => (
+                {/* {chatGroupIds.map((chatGroupId) => (
                     <ChatItem key={chatGroupId} chatGroupId={chatGroupId} openChatGroupId={openChatGroupId} setOpenChatGroupId={setOpenChatGroupId} />
-                ))}
+                ))} */}
 
             </div>
 
