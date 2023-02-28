@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 // import { toast } from 'react-toastify'
 import { signin } from "../lib/auth";
-import { signInWithGoogle } from "../lib/auth/withProviders";
-import { auth } from "../lib/firebase";
+
 import NextLink from "next/link";
 import {
 	Flex,
@@ -31,7 +30,7 @@ import { FcGoogle } from "react-icons/fc";
 type Props = {};
 
 const Login = (props: Props) => {
-	const { login } = useAuth();
+	const { login, loginWithGoogle } = useAuth();
 	const toast = useToast();
 	return (
 		<Flex
@@ -140,6 +139,23 @@ const Login = (props: Props) => {
 											color={"gray.700"}
 											_hover={{
 												bg: "white",
+											}}
+											onClick={async () => {
+												try {
+													await loginWithGoogle();
+													toast({
+														title: "Welcome back!",
+														status: "success",
+														isClosable: true,
+													});
+												} catch (error: unknown) {
+													const message: string = getErrorMessage(error);
+													toast({
+														title: message,
+														status: "error",
+														isClosable: true,
+													});
+												}
 											}}
 										>
 											Sign in with Google
