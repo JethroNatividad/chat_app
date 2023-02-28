@@ -36,7 +36,7 @@ const Signup = (props: Props) => {
 		>
 			<Stack spacing={4} mx={"auto"} maxW={"lg"} py={12} px={6}>
 				<Stack align={"center"}>
-					<Heading fontSize={"4xl"}>Sign in to your account</Heading>
+					<Heading fontSize={"4xl"}>Create your new account</Heading>
 					<Text fontSize={"lg"} color={"gray.600"}>
 						😎👍 Chat with anyone, anywhere.
 					</Text>
@@ -49,7 +49,7 @@ const Signup = (props: Props) => {
 				>
 					<Formik
 						initialValues={{ username: "", email: "", password: "" }}
-						onSubmit={async (fieldValues, { setSubmitting, setFieldValue }) => {
+						onSubmit={async (fieldValues, { setSubmitting }) => {
 							try {
 								setSubmitting(true);
 								await register(fieldValues);
@@ -82,7 +82,18 @@ const Signup = (props: Props) => {
 								onSubmit={handleSubmit}
 							>
 								<Stack spacing={4}>
-									<FormControl id="email">
+									<FormControl isRequired id="username">
+										<FormLabel>Username</FormLabel>
+										<Input
+											required
+											onChange={handleChange}
+											onBlur={handleBlur}
+											value={values.username}
+											type="text"
+											name="username"
+										/>
+									</FormControl>
+									<FormControl isRequired id="email">
 										<FormLabel>Email address</FormLabel>
 										<Input
 											required
@@ -93,7 +104,7 @@ const Signup = (props: Props) => {
 											name="email"
 										/>
 									</FormControl>
-									<FormControl id="password">
+									<FormControl isRequired id="password">
 										<FormLabel>Password</FormLabel>
 										<Input
 											required
@@ -110,9 +121,9 @@ const Signup = (props: Props) => {
 											align={"start"}
 										>
 											{/* <NextLink as={}></NextLink> */}
-											<Text>New here?</Text>
-											<NextLink href="signup" passHref>
-												<Link color={"blue.400"}>Create an account</Link>
+											<Text>Already have an account? </Text>
+											<NextLink href="login" passHref>
+												<Link color={"blue.400"}>Login</Link>
 											</NextLink>
 										</Stack>
 										<Button
@@ -124,7 +135,7 @@ const Signup = (props: Props) => {
 											isLoading={isSubmitting}
 											type="submit"
 										>
-											Sign in
+											Create account
 										</Button>
 										<Divider orientation="horizontal" />
 										<Button
