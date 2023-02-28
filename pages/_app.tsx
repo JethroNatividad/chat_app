@@ -1,27 +1,17 @@
-import '../styles/globals.css'
-import 'react-toastify/dist/ReactToastify.css';
-import type { AppProps } from 'next/app'
-import { ToastContainer } from 'react-toastify';
-import AuthProvider from '../context/AuthContext';
-
+import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import type { AppProps } from "next/app";
+import AuthProvider from "../context/AuthContext";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <AuthProvider>
-    <Component {...pageProps} />
-    <ToastContainer position="top-right"
-      autoClose={2000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss={false}
-      draggable
-      pauseOnHover={false}
-      toastClassName={
-        "relative flex bg-primary-dark shadow-lg p-2 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer text-white"
-      }
-      />
-      </AuthProvider>
+	return (
+		<ChakraProvider>
+			<AuthProvider>
+				<Component {...pageProps} />
+			</AuthProvider>
+		</ChakraProvider>
+	);
 }
 
-export default MyApp
+export default MyApp;
