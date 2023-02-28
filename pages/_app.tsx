@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
 import AuthProvider from "../context/AuthContext";
 import { ChakraProvider } from "@chakra-ui/react";
