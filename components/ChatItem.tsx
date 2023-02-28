@@ -46,7 +46,7 @@ const ChatItem = ({
 		return () => {
 			unsubscribe();
 		};
-	}, [chatGroupId]);
+	}, [chatGroupId, currentUser]);
 
 	return (
 		<div
