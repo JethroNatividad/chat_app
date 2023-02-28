@@ -16,24 +16,29 @@ import { generateUniqueNumber, getErrorMessage } from "../lib/helpers";
 import { userRef } from "../lib/refs/User";
 import { User } from "../types/User";
 
+type LoginParams = {
+	email: string;
+	password: string;
+};
+type RegisterParams = {
+	username: string;
+	email: string;
+	password: string;
+};
 interface IAuthContext {
 	user: User | null;
-	login: (email: string, password: string) => Promise<void>;
+	login: (params: LoginParams) => Promise<void>;
 	loginWithGoogle: () => Promise<void>;
 	logout: () => Promise<void>;
-	register: (
-		username: string,
-		email: string,
-		password: string
-	) => Promise<void>;
+	register: (params: RegisterParams) => Promise<void>;
 	userLoading: boolean;
 }
 const AuthContext = createContext<IAuthContext>({
 	user: null,
-	login: async (email: string, password: string) => {},
+	login: async (params: LoginParams) => {},
 	loginWithGoogle: async () => {},
 	logout: async () => {},
-	register: async (username: string, email: string, password: string) => {},
+	register: async (params: RegisterParams) => {},
 	userLoading: true,
 });
 
@@ -59,7 +64,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		};
 	}, []);
 
-	async function login(email: string, password: string) {
+	async function login({ email, password }: LoginParams) {
 		try {
 			await signInWithEmailAndPassword(auth, email, password);
 		} catch (error: unknown) {
@@ -79,7 +84,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		}
 	}
 
-	async function register(username: string, email: string, password: string) {
+	async function register({ username, email, password }: RegisterParams) {
 		try {
 			const data = await createUserWithEmailAndPassword(auth, email, password);
 			const { user } = data;

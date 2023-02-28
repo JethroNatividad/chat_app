@@ -1,104 +1,168 @@
-import { signOut } from 'firebase/auth'
-import { Formik } from 'formik'
-import { useRouter } from 'next/router'
-import React from 'react'
-import { signup } from '../lib/auth'
-import { signInWithGoogle } from '../lib/auth/withProviders'
-import { auth } from '../lib/firebase'
+import { Formik } from "formik";
+import React from "react";
 
-type Props = {}
+import NextLink from "next/link";
+import {
+	Flex,
+	Box,
+	FormControl,
+	FormLabel,
+	Input,
+	Stack,
+	Link,
+	Button,
+	Heading,
+	Text,
+	useColorModeValue,
+	useToast,
+	Divider,
+	Icon,
+} from "@chakra-ui/react";
+import { useAuth } from "../context/AuthContext";
+import { getErrorMessage } from "../lib/helpers";
+import { FcGoogle } from "react-icons/fc";
+
+type Props = {};
 
 const Signup = (props: Props) => {
-    const router = useRouter()
-    return (
-        <div className='bg-secondary-dark h-screen w-screen'>
-            <div className='bg-primary-dark h-full w-full max-w-3xl mx-auto'>
-                <div className='shadow-sm shadow-secondary-dark py-5 px-7' >
-                    <h1 className='text-xl text-white font-bold'>Sign up</h1>
-                </div>
-                <Formik initialValues={{ username: '', email: '', password: '', repeat: '' }} onSubmit={async ({ username, email, password, repeat }, { setSubmitting, setFieldValue }) => {
-                    if (password !== repeat) {
-                        setFieldValue('password', '')
-                        setFieldValue('repeat', '')
-                        return alert('Password dont match')
-                    }
-                    setSubmitting(true)
-                    const error = await signup(username, email, password)
-                    if (error) {
-                        setSubmitting(false)
-                        return alert(error)
-                    }
-                    alert("Signed up bro")
-                    setSubmitting(false)
-                }}>
-                    {({
-                        values,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting,
-                        /* and other goodies */
-                    }) => (
-                        <form className="flex flex-col w-full p-5 space-y-3 " onSubmit={handleSubmit}>
-                            <input
-                                className='input-dark'
-                                type="username"
-                                name="username"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.username}
-                                placeholder='Username'
-                            />
-                            <input
-                                className='input-dark'
-                                type="email"
-                                name="email"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.email}
-                                placeholder='Email'
-                            />
-                            <div className='flex space-x-3'>
-                                <input
-                                    className='input-dark w-1/2'
-                                    type="password"
-                                    name="password"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.password}
-                                    placeholder='Password'
-                                />
-                                <input
-                                    className='input-dark w-1/2'
-                                    type="password"
-                                    name="repeat"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.repeat}
-                                    placeholder='Repeat Password'
-                                />
+	const { register, loginWithGoogle } = useAuth();
+	const toast = useToast();
+	return (
+		<Flex
+			minH={"100vh"}
+			align={"center"}
+			justify={"center"}
+			bg={useColorModeValue("gray.50", "gray.800")}
+		>
+			<Stack spacing={4} mx={"auto"} maxW={"lg"} py={12} px={6}>
+				<Stack align={"center"}>
+					<Heading fontSize={"4xl"}>Sign in to your account</Heading>
+					<Text fontSize={"lg"} color={"gray.600"}>
+						😎👍 Chat with anyone, anywhere.
+					</Text>
+				</Stack>
+				<Box
+					rounded={"lg"}
+					bg={useColorModeValue("white", "gray.700")}
+					boxShadow={"lg"}
+					p={4}
+				>
+					<Formik
+						initialValues={{ username: "", email: "", password: "" }}
+						onSubmit={async (fieldValues, { setSubmitting, setFieldValue }) => {
+							try {
+								setSubmitting(true);
+								await register(fieldValues);
+								toast({
+									title: "Welcome back!",
+									status: "success",
+									isClosable: true,
+								});
+							} catch (error: unknown) {
+								const message: string = getErrorMessage(error);
+								toast({
+									title: message,
+									status: "error",
+									isClosable: true,
+								});
+							}
+							setSubmitting(false);
+						}}
+					>
+						{({
+							values,
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							isSubmitting,
+							/* and other goodies */
+						}) => (
+							<form
+								className="flex flex-col w-full p-5 space-y-3 "
+								onSubmit={handleSubmit}
+							>
+								<Stack spacing={4}>
+									<FormControl id="email">
+										<FormLabel>Email address</FormLabel>
+										<Input
+											required
+											onChange={handleChange}
+											onBlur={handleBlur}
+											value={values.email}
+											type="email"
+											name="email"
+										/>
+									</FormControl>
+									<FormControl id="password">
+										<FormLabel>Password</FormLabel>
+										<Input
+											required
+											onChange={handleChange}
+											onBlur={handleBlur}
+											value={values.password}
+											name="password"
+											type="password"
+										/>
+									</FormControl>
+									<Stack spacing={10}>
+										<Stack
+											direction={{ base: "column", sm: "row" }}
+											align={"start"}
+										>
+											{/* <NextLink as={}></NextLink> */}
+											<Text>New here?</Text>
+											<NextLink href="signup" passHref>
+												<Link color={"blue.400"}>Create an account</Link>
+											</NextLink>
+										</Stack>
+										<Button
+											bg={"blue.400"}
+											color={"white"}
+											_hover={{
+												bg: "blue.500",
+											}}
+											isLoading={isSubmitting}
+											type="submit"
+										>
+											Sign in
+										</Button>
+										<Divider orientation="horizontal" />
+										<Button
+											leftIcon={<Icon as={FcGoogle as any} />}
+											bg={"white"}
+											color={"gray.700"}
+											_hover={{
+												bg: "white",
+											}}
+											onClick={async () => {
+												try {
+													await loginWithGoogle();
+													toast({
+														title: "Welcome back!",
+														status: "success",
+														isClosable: true,
+													});
+												} catch (error: unknown) {
+													const message: string = getErrorMessage(error);
+													toast({
+														title: message,
+														status: "error",
+														isClosable: true,
+													});
+												}
+											}}
+										>
+											Sign in with Google
+										</Button>
+									</Stack>
+								</Stack>
+							</form>
+						)}
+					</Formik>
+				</Box>
+			</Stack>
+		</Flex>
+	);
+};
 
-                            </div>
-                            <button disabled={isSubmitting} className="btn-dark w-52" type="submit">Submit</button>
-                            <button className="btn-dark w-52" type='button' onClick={() => router.push('/login')}>Already have an account</button>
-                            <div className='text-center space-y-2'>
-                                <p className='text-white'>Or Sign in with:</p>
-                                <button className="btn-dark" type='button' onClick={async () => {
-                                    const error = await signInWithGoogle()
-                                    if (error) {
-                                        alert(error)
-                                        return await signOut(auth)
-                                    }
-                                    alert("Signup success")
-                                }}>Google</button>
-                            </div>
-                        </form>
-                    )}
-                </Formik>
-
-            </div>
-        </div >
-    )
-}
-
-export default Signup
+export default Signup;

@@ -49,13 +49,10 @@ const Login = (props: Props) => {
 				>
 					<Formik
 						initialValues={{ email: "", password: "" }}
-						onSubmit={async (
-							{ email, password },
-							{ setSubmitting, setFieldValue }
-						) => {
+						onSubmit={async (fieldValues, { setSubmitting, setFieldValue }) => {
 							try {
 								setSubmitting(true);
-								await login(email, password);
+								await login(fieldValues);
 								toast({
 									title: "Welcome back!",
 									status: "success",
@@ -88,6 +85,7 @@ const Login = (props: Props) => {
 									<FormControl id="email">
 										<FormLabel>Email address</FormLabel>
 										<Input
+											required
 											onChange={handleChange}
 											onBlur={handleBlur}
 											value={values.email}
@@ -98,6 +96,7 @@ const Login = (props: Props) => {
 									<FormControl id="password">
 										<FormLabel>Password</FormLabel>
 										<Input
+											required
 											onChange={handleChange}
 											onBlur={handleBlur}
 											value={values.password}
@@ -109,9 +108,9 @@ const Login = (props: Props) => {
 										<Stack
 											direction={{ base: "column", sm: "row" }}
 											align={"start"}
-											justify={"space-between"}
 										>
 											{/* <NextLink as={}></NextLink> */}
+											<Text>New here?</Text>
 											<NextLink href="signup" passHref>
 												<Link color={"blue.400"}>Create an account</Link>
 											</NextLink>
