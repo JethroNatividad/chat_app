@@ -20,12 +20,16 @@ import {
 	Heading,
 	Text,
 	useColorModeValue,
+	useToast,
 } from "@chakra-ui/react";
+import { useAuth } from "../context/AuthContext";
+import { getErrorMessage } from "../lib/helpers";
 
 type Props = {};
 
 const Login = (props: Props) => {
-	const router = useRouter();
+	const { login } = useAuth();
+	const toast = useToast();
 	return (
 		<Flex
 			minH={"100vh"}
@@ -52,13 +56,22 @@ const Login = (props: Props) => {
 							{ email, password },
 							{ setSubmitting, setFieldValue }
 						) => {
-							setSubmitting(true);
-							const error = await signin(email, password);
-							if (error) {
-								setSubmitting(false);
-								// return toast.error(error)
+							try {
+								setSubmitting(true);
+								await login(email, password);
+								toast({
+									title: "Welcome back!",
+									status: "success",
+									isClosable: true,
+								});
+							} catch (error: unknown) {
+								const message: string = getErrorMessage(error);
+								toast({
+									title: message,
+									status: "error",
+									isClosable: true,
+								});
 							}
-							// toast.success("Welcome back")
 							setSubmitting(false);
 						}}
 					>
@@ -113,6 +126,7 @@ const Login = (props: Props) => {
 												bg: "blue.500",
 											}}
 											isLoading={isSubmitting}
+											type="submit"
 										>
 											Sign in
 										</Button>
