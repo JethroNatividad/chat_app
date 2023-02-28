@@ -21,9 +21,12 @@ import {
 	Text,
 	useColorModeValue,
 	useToast,
+	Divider,
+	Icon,
 } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
 import { getErrorMessage } from "../lib/helpers";
+import { FcGoogle } from "react-icons/fc";
 
 type Props = {};
 
@@ -37,7 +40,7 @@ const Login = (props: Props) => {
 			justify={"center"}
 			bg={useColorModeValue("gray.50", "gray.800")}
 		>
-			<Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+			<Stack spacing={4} mx={"auto"} maxW={"lg"} py={12} px={6}>
 				<Stack align={"center"}>
 					<Heading fontSize={"4xl"}>Sign in to your account</Heading>
 					<Text fontSize={"lg"} color={"gray.600"}>
@@ -48,7 +51,7 @@ const Login = (props: Props) => {
 					rounded={"lg"}
 					bg={useColorModeValue("white", "gray.700")}
 					boxShadow={"lg"}
-					p={8}
+					p={4}
 				>
 					<Formik
 						initialValues={{ email: "", password: "" }}
@@ -129,6 +132,17 @@ const Login = (props: Props) => {
 											type="submit"
 										>
 											Sign in
+										</Button>
+										<Divider orientation="horizontal" />
+										<Button
+											leftIcon={<Icon as={FcGoogle as any} />}
+											bg={"white"}
+											color={"gray.700"}
+											_hover={{
+												bg: "white",
+											}}
+										>
+											Sign in with Google
 										</Button>
 									</Stack>
 								</Stack>
