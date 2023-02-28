@@ -1,9 +1,5 @@
-import { signOut } from "firebase/auth";
 import { Formik } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
-// import { toast } from 'react-toastify'
-import { signin } from "../lib/auth";
 
 import NextLink from "next/link";
 import {
@@ -12,7 +8,6 @@ import {
 	FormControl,
 	FormLabel,
 	Input,
-	Checkbox,
 	Stack,
 	Link,
 	Button,
