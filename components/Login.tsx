@@ -1,79 +1,130 @@
-import { signOut } from 'firebase/auth'
-import { Formik } from 'formik'
-import { useRouter } from 'next/router'
-import React from 'react'
+import { signOut } from "firebase/auth";
+import { Formik } from "formik";
+import { useRouter } from "next/router";
+import React from "react";
 // import { toast } from 'react-toastify'
-import { signin } from '../lib/auth'
-import { signInWithGoogle } from '../lib/auth/withProviders'
-import { auth } from '../lib/firebase'
+import { signin } from "../lib/auth";
+import { signInWithGoogle } from "../lib/auth/withProviders";
+import { auth } from "../lib/firebase";
+import NextLink from "next/link";
+import {
+	Flex,
+	Box,
+	FormControl,
+	FormLabel,
+	Input,
+	Checkbox,
+	Stack,
+	Link,
+	Button,
+	Heading,
+	Text,
+	useColorModeValue,
+} from "@chakra-ui/react";
 
-type Props = {}
+type Props = {};
 
 const Login = (props: Props) => {
-    const router = useRouter()
-    return (
-        <div className='bg-secondary-dark h-screen w-screen'>
-            <div className='bg-primary-dark h-full w-full max-w-3xl mx-auto'>
-                <div className='shadow-sm shadow-secondary-dark py-5 px-7' >
-                    <h1 className='text-xl text-white font-bold'>Sign in</h1>
-                </div>
-                <Formik initialValues={{ email: '', password: '' }} onSubmit={async ({ email, password }, { setSubmitting, setFieldValue }) => {
-                    setSubmitting(true)
-                    const error = await signin(email, password)
-                    if (error) {
-                        setSubmitting(false)
-                        // return toast.error(error)
-                    }
-                    // toast.success("Welcome back")
-                    setSubmitting(false)
-                }}>
-                    {({
-                        values,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting,
-                        /* and other goodies */
-                    }) => (
-                        <form className="flex flex-col w-full p-5 space-y-3 " onSubmit={handleSubmit}>
-                            <input
-                                className='input-dark'
-                                type="email"
-                                name="email"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.email}
-                                placeholder='Email'
-                            />
-                            <input
-                                className='input-dark'
-                                type="password"
-                                name="password"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.password}
-                                placeholder='Password'
-                            />
-                            <button disabled={isSubmitting} className="btn-dark w-48" type="submit">Submit</button>
-                            <button className="btn-dark w-48" type='button' onClick={() => router.push('/signup')}>Create an account</button>
-                            <div className='text-center space-y-2'>
-                                <p className='text-white'>Or Sign in with:</p>
-                                <button className="btn-dark" type='button' onClick={async () => {
-                                    const error = await signInWithGoogle()
-                                    if (error) {
-                                        alert(error)
-                                        return await signOut(auth)
-                                    }
-                                    alert("Login success")
-                                }}>Google</button>
-                            </div>
-                        </form>
-                    )}
-                </Formik>
+	const router = useRouter();
+	return (
+		<Flex
+			minH={"100vh"}
+			align={"center"}
+			justify={"center"}
+			bg={useColorModeValue("gray.50", "gray.800")}
+		>
+			<Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+				<Stack align={"center"}>
+					<Heading fontSize={"4xl"}>Sign in to your account</Heading>
+					<Text fontSize={"lg"} color={"gray.600"}>
+						😎👍 Chat with anyone, anywhere.
+					</Text>
+				</Stack>
+				<Box
+					rounded={"lg"}
+					bg={useColorModeValue("white", "gray.700")}
+					boxShadow={"lg"}
+					p={8}
+				>
+					<Formik
+						initialValues={{ email: "", password: "" }}
+						onSubmit={async (
+							{ email, password },
+							{ setSubmitting, setFieldValue }
+						) => {
+							setSubmitting(true);
+							const error = await signin(email, password);
+							if (error) {
+								setSubmitting(false);
+								// return toast.error(error)
+							}
+							// toast.success("Welcome back")
+							setSubmitting(false);
+						}}
+					>
+						{({
+							values,
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							isSubmitting,
+							/* and other goodies */
+						}) => (
+							<form
+								className="flex flex-col w-full p-5 space-y-3 "
+								onSubmit={handleSubmit}
+							>
+								<Stack spacing={4}>
+									<FormControl id="email">
+										<FormLabel>Email address</FormLabel>
+										<Input
+											onChange={handleChange}
+											onBlur={handleBlur}
+											value={values.email}
+											type="email"
+											name="email"
+										/>
+									</FormControl>
+									<FormControl id="password">
+										<FormLabel>Password</FormLabel>
+										<Input
+											onChange={handleChange}
+											onBlur={handleBlur}
+											value={values.password}
+											name="password"
+											type="password"
+										/>
+									</FormControl>
+									<Stack spacing={10}>
+										<Stack
+											direction={{ base: "column", sm: "row" }}
+											align={"start"}
+											justify={"space-between"}
+										>
+											{/* <NextLink as={}></NextLink> */}
+											<NextLink href="signup" passHref>
+												<Link color={"blue.400"}>Create an account</Link>
+											</NextLink>
+										</Stack>
+										<Button
+											bg={"blue.400"}
+											color={"white"}
+											_hover={{
+												bg: "blue.500",
+											}}
+											isLoading={isSubmitting}
+										>
+											Sign in
+										</Button>
+									</Stack>
+								</Stack>
+							</form>
+						)}
+					</Formik>
+				</Box>
+			</Stack>
+		</Flex>
+	);
+};
 
-            </div>
-        </div >
-    )
-}
-
-export default Login
+export default Login;
