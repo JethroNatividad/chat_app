@@ -16,7 +16,7 @@
 		"@tailwindcss/line-clamp": "^0.4.0",
 		"firebase": "^9.8.1",
 		"formik": "^2.2.9",
-		"framer-motion": "^10.0.1",
+		"framer-motion": "^10.1.0",
 		"moment": "^2.29.3",
 		"next": "13.2.1",
 		"react": "18.2.0",
