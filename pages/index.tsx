@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 			</Head>
 			<Box h="100vh" display="flex">
 				<Box
-					w={{ base: "full", md: "33.33%" }}
+					w={{ base: "full", md: "40%" }}
 					h="full"
 					position={{ base: "fixed", md: "relative" }}
 					top={0}
@@ -36,17 +36,18 @@ const Home: NextPage = () => {
 					<UserInfoBar />
 				</Box>
 				<Box
-					w={{ base: "full", md: "33.33%" }}
+					w={{ base: "full" }}
 					h="full"
 					position={{ base: "fixed", md: "relative" }}
 					top={0}
 					left={0}
 					zIndex={10}
+					bg="blackAlpha.400"
 					className={`transition-transform duration-300 ${
 						null !== null ? "translate-x-0" : "translate-x-full"
 					} md:translate-x-0`}
 				>
-					<Box>Right</Box>
+					<Box>Open or start a new conversation</Box>
 				</Box>
 			</Box>
 		</div>
