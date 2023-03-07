@@ -19,18 +19,19 @@ const Home: NextPage = () => {
 			</Head>
 			<Box h="100vh" display="flex">
 				<Box
+					minW={"sm"}
 					w={{ base: "full", md: "40%" }}
 					h="full"
 					position={{ base: "fixed", md: "relative" }}
 					top={0}
 					left={0}
-					zIndex={10}
 					className={`transition-transform duration-300 ${
 						null !== null ? "-translate-x-full" : "translate-x-0"
 					} md:translate-x-0`}
 					display="flex"
 					flexDirection="column"
 					justifyContent="space-between"
+					zIndex={10}
 				>
 					<Box>Left</Box>
 					<UserInfoBar />
@@ -41,7 +42,6 @@ const Home: NextPage = () => {
 					position={{ base: "fixed", md: "relative" }}
 					top={0}
 					left={0}
-					zIndex={10}
 					bg="blackAlpha.400"
 					className={`transition-transform duration-300 ${
 						null !== null ? "translate-x-0" : "translate-x-full"
