@@ -18,6 +18,7 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { GoSettings } from "react-icons/go";
 import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+import { MdOutlineLogout } from "react-icons/md";
 
 type Props = {};
 
@@ -78,7 +79,10 @@ const UserInfoBar = (props: Props) => {
 					Actions
 				</MenuButton>
 				<MenuList>
-					<MenuItem onClick={logout}>Logout </MenuItem>
+					<MenuItem onClick={logout}>
+						<MdOutlineLogout />
+						<Text mx="2">Log out</Text>
+					</MenuItem>
 					<MenuItem
 						closeOnSelect={false}
 						aria-label="Toggle Color Mode"
