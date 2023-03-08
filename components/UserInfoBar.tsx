@@ -12,14 +12,17 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
+	useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { GoSettings } from "react-icons/go";
+import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 
 type Props = {};
 
 const UserInfoBar = (props: Props) => {
+	const { colorMode, toggleColorMode } = useColorMode();
 	const { user, userLoading, logout } = useAuth();
 
 	const Avatar = () => {
@@ -76,6 +79,25 @@ const UserInfoBar = (props: Props) => {
 				</MenuButton>
 				<MenuList>
 					<MenuItem onClick={logout}>Logout </MenuItem>
+					<MenuItem
+						closeOnSelect={false}
+						aria-label="Toggle Color Mode"
+						onClick={toggleColorMode}
+						display="flex"
+						alignItems="center"
+					>
+						{colorMode === "light" ? (
+							<>
+								<BsMoonStarsFill />
+								<Text mx="2">Dark mode</Text>
+							</>
+						) : (
+							<>
+								<BsSun />
+								<Text mx="2">Light mode</Text>
+							</>
+						)}
+					</MenuItem>
 				</MenuList>
 			</Menu>
 		</Flex>
