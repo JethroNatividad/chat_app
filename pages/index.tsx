@@ -9,6 +9,7 @@ import { auth } from "../lib/firebase";
 import { Box, Button, Slide } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
 import UserInfoBar from "../components/UserInfoBar";
+import ChatList from "../components/ChatList";
 const Home: NextPage = () => {
 	return (
 		<div>
@@ -25,15 +26,16 @@ const Home: NextPage = () => {
 					position={{ base: "fixed", md: "relative" }}
 					top={0}
 					left={0}
-					className={`transition-transform duration-300 ${
-						null !== null ? "-translate-x-full" : "translate-x-0"
-					} md:translate-x-0`}
+					className={`transition-transform duration-300 ${null !== null ? "-translate-x-full" : "translate-x-0"
+						} md:translate-x-0`}
 					display="flex"
 					flexDirection="column"
 					justifyContent="space-between"
 					zIndex={10}
 				>
-					<Box>Left</Box>
+					<Box>
+						<ChatList />
+					</Box>
 					<UserInfoBar />
 				</Box>
 				<Box
@@ -43,9 +45,8 @@ const Home: NextPage = () => {
 					top={0}
 					left={0}
 					bg="blackAlpha.400"
-					className={`transition-transform duration-300 ${
-						null !== null ? "translate-x-0" : "translate-x-full"
-					} md:translate-x-0`}
+					className={`transition-transform duration-300 ${null !== null ? "translate-x-0" : "translate-x-full"
+						} md:translate-x-0`}
 				>
 					<Box>Open or start a new conversation</Box>
 				</Box>
