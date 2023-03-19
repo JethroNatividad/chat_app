@@ -6,7 +6,7 @@ import {
 	signInWithPopup,
 	signOut,
 } from "firebase/auth";
-import { setDoc } from "firebase/firestore";
+import { onSnapshot, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { createContext, useState, useEffect, useContext } from "react";
 import { createUserFromProvider } from "../lib/auth/withProviders";
@@ -35,10 +35,10 @@ interface IAuthContext {
 }
 const AuthContext = createContext<IAuthContext>({
 	user: null,
-	login: async (params: LoginParams) => {},
-	loginWithGoogle: async () => {},
-	logout: async () => {},
-	register: async (params: RegisterParams) => {},
+	login: async (params: LoginParams) => { },
+	loginWithGoogle: async () => { },
+	logout: async () => { },
+	register: async (params: RegisterParams) => { },
 	userLoading: true,
 });
 
@@ -50,17 +50,21 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	const router = useRouter();
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+		const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
 			if (!user) return router.push("/login");
 
-			const userData = await populateUserId(user.uid);
-			if (!userData) return router.push("/login");
-
-			setUser(userData);
-			setUserLoading(false);
+			const unsubscribeUser = onSnapshot(userRef(user.uid), (snapshot) => {
+				const userData = snapshot.data()
+				if (!userData) return router.push("/login");
+				setUser(userData)
+				if (userLoading) setUserLoading(false)
+			})
+			return () => {
+				unsubscribeUser();
+			}
 		});
 		return () => {
-			unsubscribe();
+			unsubscribeAuth();
 		};
 	}, []);
 
