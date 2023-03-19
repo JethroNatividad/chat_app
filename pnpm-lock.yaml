@@ -5,23 +5,23 @@ specifiers:
   '@emotion/react': ^11.10.6
   '@emotion/styled': ^11.10.6
   '@heroicons/react': ^1.0.6
-  '@tailwindcss/line-clamp': ^0.4.0
+  '@tailwindcss/line-clamp': ^0.4.2
   '@types/node': 18.14.2
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
-  autoprefixer: ^10.4.7
+  autoprefixer: ^10.4.13
   eslint: 8.16.0
   eslint-config-next: 13.2.1
-  firebase: ^9.8.1
+  firebase: ^9.16.0
   formik: ^2.2.9
   framer-motion: ^10.2.3
-  moment: ^2.29.3
+  moment: ^2.29.4
   next: 13.2.1
-  postcss: ^8.4.14
+  postcss: ^8.4.21
   react: 18.2.0
   react-dom: 18.2.0
   react-icons: ^4.7.1
-  tailwindcss: ^3.0.24
+  tailwindcss: ^3.2.4
   typescript: 4.6.4
 
 dependencies:
@@ -2303,7 +2303,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.5
-      caniuse-lite: 1.0.30001450
+      caniuse-lite: 1.0.30001468
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -2362,7 +2362,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001450
+      caniuse-lite: 1.0.30001468
       electron-to-chromium: 1.4.284
       node-releases: 2.0.9
       update-browserslist-db: 1.0.10_browserslist@4.21.5
@@ -2383,13 +2383,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  /caniuse-lite/1.0.30001450:
-    resolution: {integrity: sha512-qMBmvmQmFXaSxexkjjfMvD5rnDL0+m+dUMZKoDYsGG8iZN29RuYh9eRoMvKsT6uMAWlyUUGDEQGJJYjzCIO9ew==}
-    dev: true
-
-  /caniuse-lite/1.0.30001458:
-    resolution: {integrity: sha512-lQ1VlUUq5q9ro9X+5gOEyH7i3vm+AYVT1WDCVB69XOZ17KZRhnZ9J0Sqz7wTHQaLBJccNCHq8/Ww5LlOIZbB0w==}
-    dev: false
+  /caniuse-lite/1.0.30001468:
+    resolution: {integrity: sha512-zgAo8D5kbOyUcRAgSmgyuvBkjrGk5CGYG5TYgFdpQv+ywcyEpo1LOWoG8YmoflGnh+V+UsNuKYedsoYs0hzV5A==}
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -3764,7 +3759,7 @@ packages:
     dependencies:
       '@next/env': 13.2.1
       '@swc/helpers': 0.4.14
-      caniuse-lite: 1.0.30001458
+      caniuse-lite: 1.0.30001468
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
