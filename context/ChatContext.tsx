@@ -35,30 +35,34 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 const chatGroups = user.chatGroups;
                 const populatedChatGroups: PopulatedChatGroup[] = [];
 
-                for (const chatGroupId of chatGroups) {
-                    const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
-                        const data = snapshot.data();
+                await Promise.all<void>(
+                    chatGroups.map((chatGroupId) => {
+                        return new Promise((resolve) => {
+                            const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
+                                const data = snapshot.data();
+                                console.log("SNAPSHOT CHAT DATA", data)
 
-                        if (data) {
-                            const members: User[] = [];
-                            data.members.forEach(async (id) => {
-                                const member = await populateUserId(id);
-                                if (member) {
-                                    members.push(member);
+                                if (data) {
+                                    const members: User[] = [];
+                                    for (const id of data.members) {
+                                        const member = await populateUserId(id);
+                                        if (member) {
+                                            members.push(member);
+                                        }
+                                    }
+
+                                    const populatedData = { ...data, members };
+                                    populatedChatGroups.push(populatedData);
                                 }
+
+                                unsubscribe();
+                                resolve();
                             });
+                        });
+                    })
+                );
 
-                            const populatedData = { ...data, members };
-                            populatedChatGroups.push(populatedData);
-                            setChatList(populatedChatGroups);
-                        }
-                    });
-
-                    return () => {
-                        unsubscribe();
-                    };
-                }
-
+                setChatList(populatedChatGroups);
                 if (chatListLoading) {
                     setChatListLoading(false);
                 }
