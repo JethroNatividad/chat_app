@@ -8,13 +8,15 @@ import { populateUserId } from '../lib/functions/user';
 interface IChatContext {
     activeChat: any;
     setActiveChat: (value: any) => void;
-    chatList: any;
+    chatList: PopulatedChatGroup[];
+    chatListLoading: boolean;
 }
 
 const ChatContext = createContext<IChatContext>({
     activeChat: null,
     setActiveChat: () => { },
-    chatList: null,
+    chatList: [],
+    chatListLoading: true,
 })
 
 const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -68,7 +70,7 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
 
     return (
-        <ChatContext.Provider value={{ activeChat, setActiveChat, chatList }}>
+        <ChatContext.Provider value={{ activeChat, setActiveChat, chatList, chatListLoading }}>
             {children}
         </ChatContext.Provider>
     );
