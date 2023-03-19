@@ -1,4 +1,4 @@
-import { FieldValue, Timestamp } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore"
 import { User } from "./User"
 
 export type Message = {
@@ -15,11 +15,11 @@ export type ChatGroup = {
     id: string
     createdAt: Timestamp
     createdBy: string
-    members: string[]
+    members: User[]
     recentMessage: RecentMessage | null
 }
-export type PopulatedChatGroup = Omit<ChatGroup, 'members'> & {
-    members: User[]
-}
+// export type PopulatedChatGroup = Omit<ChatGroup, 'members'> & {
+//     members: User[]
+// }
 // create type of chatgroup without id
 export type ChatGroupWithoutId = Omit<ChatGroup, 'id'>
