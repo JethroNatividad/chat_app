@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CogIcon, UsersIcon } from "@heroicons/react/solid";
-import ChatItem from "./ChatItem";
+import ChatItem from "./ChatItemOld";
 import useUser from "../hooks/useUser";
 import { ChatGroup } from "../types/Chats";
 import SearchBar from "./SearchBar";
