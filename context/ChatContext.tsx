@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useAuth } from './AuthContext';
 import { PopulatedChatGroup } from '../types/Chats';
-import { onSnapshot } from 'firebase/firestore';
+import { onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { chatGroupRef } from '../lib/refs/Chats';
 import { User } from '../types/User';
 import { populateUserId } from '../lib/functions/user';
@@ -30,39 +30,43 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }, [activeChat]);
 
     useEffect(() => {
+        const cleanupFunctions: Unsubscribe[] = [];
+
         const getChatList = async () => {
             if (user && !userLoading) {
                 const chatGroups = user.chatGroups;
-                const populatedChatGroups: PopulatedChatGroup[] = [];
 
-                await Promise.all<void>(
-                    chatGroups.map((chatGroupId) => {
-                        return new Promise((resolve) => {
-                            const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
-                                const data = snapshot.data();
-                                console.log("SNAPSHOT CHAT DATA", data)
-
-                                if (data) {
-                                    const members: User[] = [];
-                                    for (const id of data.members) {
-                                        const member = await populateUserId(id);
-                                        if (member) {
-                                            members.push(member);
-                                        }
-                                    }
-
-                                    const populatedData = { ...data, members };
-                                    populatedChatGroups.push(populatedData);
+                for (const chatGroupId of chatGroups) {
+                    const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
+                        const data = snapshot.data();
+                        if (data) {
+                            const members: User[] = [];
+                            for (const id of data.members) {
+                                const member = await populateUserId(id);
+                                if (member) {
+                                    members.push(member);
                                 }
+                            }
 
-                                unsubscribe();
-                                resolve();
+                            const populatedData = { ...data, members };
+                            console.log("DATA", populatedData)
+
+                            setChatList((prevChatList) => {
+                                const chatGroupIndex = prevChatList.findIndex((chatGroup) => chatGroup.id === populatedData.id);
+                                if (chatGroupIndex !== -1) {
+                                    const newChatList = [...prevChatList];
+                                    newChatList[chatGroupIndex] = populatedData;
+                                    return newChatList;
+                                }
+                                return [...prevChatList, populatedData];
+
                             });
-                        });
+                        }
                     })
-                );
+                    cleanupFunctions.push(unsubscribe);
+                }
 
-                setChatList(populatedChatGroups);
+                // setChatList(populatedChatGroups);
                 if (chatListLoading) {
                     setChatListLoading(false);
                 }
@@ -70,8 +74,13 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         };
 
         getChatList();
-    }, [user, userLoading]);
 
+        return () => {
+            cleanupFunctions.forEach((unsubscribe) => {
+                unsubscribe();
+            });
+        };
+    }, [user, userLoading]);
 
     return (
         <ChatContext.Provider value={{ activeChat, setActiveChat, chatList, chatListLoading }}>
