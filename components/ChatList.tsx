@@ -10,7 +10,7 @@ const ChatList = (props: Props) => {
     return (
         <div>{chatListLoading ? "Loading..." : (
             <Box>
-                {chatList.map((chat) => (<Chat {...chat} />))}
+                {chatList.map((chat) => (<Chat {...chat} key={chat.id} />))}
             </Box>
         )}</div>
     )
