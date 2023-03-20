@@ -13,6 +13,7 @@ import {
 	MenuList,
 	MenuItem,
 	useColorMode,
+	Image,
 } from "@chakra-ui/react";
 import React from "react";
 import { useAuth } from "../context/AuthContext";
@@ -27,8 +28,13 @@ const UserInfoBar = (props: Props) => {
 	const { user, userLoading, logout } = useAuth();
 
 	const Avatar = () => {
-		if (userLoading) {
-			return <SkeletonCircle size="12" />;
+		if (!userLoading && user) {
+			return <Image
+				borderRadius='full'
+				boxSize='46px'
+				src={user.profilePicture}
+				alt='Dan Abramov'
+			/>;
 		}
 		return <SkeletonCircle size="12" />;
 	};
@@ -37,6 +43,7 @@ const UserInfoBar = (props: Props) => {
 		if (userLoading) {
 			return <Skeleton h={5} w={"40"} />;
 		}
+
 		return (
 			<Tooltip
 				label={`${user?.username}#${user?.uniqueNumber}`}
