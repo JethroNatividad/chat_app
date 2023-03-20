@@ -10,7 +10,7 @@ const Chat = ({ recentMessage, id, members }: Props) => {
     const { user } = useAuth()
     const memberNames = members.map((member) => member.username).join(", ")
     return (
-        <Flex px='4' py='2' alignItems="center" _hover={
+        <Flex cursor="pointer" px='4' py='2' alignItems="center" _hover={
             {
                 bg: 'blackAlpha.100'
             }
@@ -24,7 +24,7 @@ const Chat = ({ recentMessage, id, members }: Props) => {
             />
             <Box>
                 <Text fontSize="lg">{memberNames}</Text>
-                <Text minH="1.5rem" fontSize="base">{recentMessage?.messageText}</Text>
+                <Text minH="1.5rem" fontSize="base" noOfLines={1}>{recentMessage?.messageText}</Text>
             </Box>
         </Flex>
     )
