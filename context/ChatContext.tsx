@@ -1,33 +1,64 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useAuth } from './AuthContext';
-import { PopulatedChatGroup } from '../types/Chats';
-import { onSnapshot, Unsubscribe } from 'firebase/firestore';
-import { chatGroupRef } from '../lib/refs/Chats';
+import { ActiveChat, Message, PopulatedChatGroup } from '../types/Chats';
+import { onSnapshot, orderBy, query, Unsubscribe } from 'firebase/firestore';
+import { chatGroupRef, messagesRef } from '../lib/refs/Chats';
 import { User } from '../types/User';
 import { populateUserId } from '../lib/functions/user';
 interface IChatContext {
-    activeChat: any;
-    setActiveChat: (value: any) => void;
+    activeChatId: string | null;
+    activeChat: ActiveChat | null;
+    activeChatLoading: boolean;
+    setActiveChatId: (value: string | null) => void;
     chatList: PopulatedChatGroup[];
     chatListLoading: boolean;
 }
 
 const ChatContext = createContext<IChatContext>({
+    activeChatId: null,
     activeChat: null,
-    setActiveChat: () => { },
+    activeChatLoading: false,
+    setActiveChatId: () => { },
     chatList: [],
     chatListLoading: true,
 })
 
 const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, userLoading } = useAuth();
-    const [activeChat, setActiveChat] = useState<any>(null);
+    const [activeChatId, setActiveChatId] = useState<string | null>(null);
+    const [activeChat, setActiveChat] = useState<ActiveChat | null>(null);
+    const [activeChatLoading, setActiveChatLoading] = useState<boolean>(true);
     const [chatList, setChatList] = useState<PopulatedChatGroup[]>([]);
     const [chatListLoading, setChatListLoading] = useState<boolean>(true);
 
     useEffect(() => {
         // do something when active chat changes
-    }, [activeChat]);
+        const cleanupFunctions: Unsubscribe[] = [];
+        const getMessages = async () => {
+            if (activeChatId) {
+                const unsubscribe = onSnapshot(query(messagesRef(activeChatId), orderBy("sentAt", "asc")),
+                    (snapshot) => {
+                        const data = snapshot.docs.map((doc) => doc.data() as Message);
+                        setActiveChat((prev) => {
+                            if (prev) {
+                                return { ...prev, messages: data }
+                            }
+                            return { id: activeChatId, messages: data }
+                        });
+
+                        if (activeChatLoading) {
+                            setActiveChatLoading(false);
+                        }
+                    });
+                cleanupFunctions.push(unsubscribe);
+            }
+        }
+        return () => {
+            cleanupFunctions.forEach((unsubscribe) => {
+                unsubscribe();
+            });
+        };
+    }, [activeChatId]);
 
     useEffect(() => {
         const cleanupFunctions: Unsubscribe[] = [];
@@ -83,7 +114,7 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }, [user, userLoading]);
 
     return (
-        <ChatContext.Provider value={{ activeChat, setActiveChat, chatList, chatListLoading }}>
+        <ChatContext.Provider value={{ activeChatId, activeChat, activeChatLoading, setActiveChatId, chatList, chatListLoading }}>
             {children}
         </ChatContext.Provider>
     );
