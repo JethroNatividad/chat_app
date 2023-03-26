@@ -36,6 +36,7 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         const cleanupFunctions: Unsubscribe[] = [];
         const getMessages = async () => {
             if (activeChatId) {
+                setActiveChat({ id: activeChatId, messages: [] })
                 const unsubscribe = onSnapshot(query(messagesRef(activeChatId), orderBy("sentAt", "asc")),
                     (snapshot) => {
                         const data = snapshot.docs.map((doc) => doc.data() as Message);
@@ -43,7 +44,7 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                             if (prev) {
                                 return { ...prev, messages: data }
                             }
-                            return { id: activeChatId, messages: data }
+                            return null
                         });
 
                         if (activeChatLoading) {
@@ -53,6 +54,7 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 cleanupFunctions.push(unsubscribe);
             }
         }
+        getMessages()
         return () => {
             cleanupFunctions.forEach((unsubscribe) => {
                 unsubscribe();
