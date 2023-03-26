@@ -2,15 +2,23 @@ import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import React from 'react'
 import { Interface } from 'readline/promises'
 import { useAuth } from '../context/AuthContext'
+import { useChat } from '../context/ChatContext'
 import { PopulatedChatGroup } from '../types/Chats'
 
 interface Props extends PopulatedChatGroup { }
 
 const Chat = ({ recentMessage, id, members }: Props) => {
     const { user } = useAuth()
+    const { setActiveChatId, activeChat } = useChat()
+
+    const handleClick = () => {
+        if (activeChat?.id === id) return;
+        setActiveChatId(id);
+        console.log("Clicked on chat", id)
+    }
     const memberNames = members.map((member) => member.username).join(", ")
     return (
-        <Flex cursor="pointer" px='4' py='2' alignItems="center" _hover={
+        <Flex bg={activeChat?.id === id ? 'blackAlpha.100' : ''} onClick={handleClick} cursor="pointer" px='4' py='2' alignItems="center" _hover={
             {
                 bg: 'blackAlpha.100'
             }
