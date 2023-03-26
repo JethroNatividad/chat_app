@@ -21,5 +21,11 @@ export type ChatGroup = {
 export type PopulatedChatGroup = Omit<ChatGroup, 'members'> & {
     members: User[]
 }
+
+export type ActiveChat = {
+    id: string
+    messages: Message[]
+}
+
 // create type of chatgroup without id
 export type ChatGroupWithoutId = Omit<ChatGroup, 'id'>
