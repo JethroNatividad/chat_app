@@ -10,7 +10,10 @@ import { Box, Button, Flex, Slide } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
 import UserInfoBar from "../components/UserInfoBar";
 import ChatList from "../components/ChatList";
+import { useChat } from "../context/ChatContext";
+
 const Home: NextPage = () => {
+	const { activeChatId } = useChat()
 	return (
 		<div>
 			<Head>
@@ -26,7 +29,7 @@ const Home: NextPage = () => {
 					position={{ base: "fixed", md: "relative" }}
 					top={0}
 					left={0}
-					className={`transition-transform duration-300 ${null !== null ? "-translate-x-full" : "translate-x-0"
+					className={`transition-transform duration-300 ${activeChatId !== null ? "-translate-x-full" : "translate-x-0"
 						} md:translate-x-0`}
 					display="flex"
 					flexDirection="column"
@@ -45,10 +48,14 @@ const Home: NextPage = () => {
 					top={0}
 					left={0}
 					bg="blackAlpha.400"
-					className={`transition-transform duration-300 ${null !== null ? "translate-x-0" : "translate-x-full"
+					className={`transition-transform duration-300 ${activeChatId !== null ? "translate-x-0" : "translate-x-full"
 						} md:translate-x-0`}
 				>
-					<Flex w='full' h='full' justifyContent='center' alignItems='center'>Open or start a new conversation</Flex>
+					{
+						activeChatId !== null ? <ChatView /> : (
+							<Flex w='full' h='full' justifyContent='center' alignItems='center'>Open or start a new conversation</Flex>
+						)
+					}
 				</Box>
 			</Box>
 		</div>
