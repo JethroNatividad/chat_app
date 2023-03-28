@@ -12,7 +12,7 @@ import { useAuth } from "../context/AuthContext";
 import { useChat } from "../context/ChatContext";
 import { PopulatedChatGroup } from "../types/Chats";
 
-interface Props extends PopulatedChatGroup {}
+interface Props extends PopulatedChatGroup { }
 
 export const ChatLoading = () => {
 	return (
@@ -38,17 +38,17 @@ export const ChatLoading = () => {
 
 const Chat = ({ recentMessage, id, members }: Props) => {
 	const { user } = useAuth();
-	const { setActiveChatId, activeChat } = useChat();
+	const { setActiveChatId, activeChatId } = useChat();
 
 	const handleClick = () => {
-		if (activeChat?.id === id) return;
+		if (activeChatId === id) return;
 		setActiveChatId(id);
 		console.log("Clicked on chat", id);
 	};
 	const memberNames = members.map((member) => member.username).join(", ");
 	return (
 		<Flex
-			bg={activeChat?.id === id ? "blackAlpha.100" : ""}
+			bg={activeChatId === id ? "blackAlpha.100" : ""}
 			onClick={handleClick}
 			cursor="pointer"
 			px="4"
