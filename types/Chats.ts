@@ -24,7 +24,8 @@ export type PopulatedChatGroup = Omit<ChatGroup, 'members'> & {
 
 export type ActiveChat = {
     id: string
-    messages: Message[]
+    messages: Message[],
+    members: User[]
 }
 
 // create type of chatgroup without id
