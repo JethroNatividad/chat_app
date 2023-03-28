@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ChatView from "../components/ChatView";
 import Menu from "../components/Menu";
 import { auth } from "../lib/firebase";
-import { Box, Button, Slide } from "@chakra-ui/react";
+import { Box, Button, Flex, Slide } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
 import UserInfoBar from "../components/UserInfoBar";
 import ChatList from "../components/ChatList";
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
 					className={`transition-transform duration-300 ${null !== null ? "translate-x-0" : "translate-x-full"
 						} md:translate-x-0`}
 				>
-					<Box>Open or start a new conversation</Box>
+					<Flex w='full' h='full' justifyContent='center' alignItems='center'>Open or start a new conversation</Flex>
 				</Box>
 			</Box>
 		</div>
