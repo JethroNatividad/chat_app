@@ -55,6 +55,9 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 cleanupFunctions.push(unsubscribe);
             }
         }
+        if (activeChatId === null) {
+            setActiveChat(null);
+        }
         getMessages()
         return () => {
             cleanupFunctions.forEach((unsubscribe) => {
