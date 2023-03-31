@@ -7,8 +7,6 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import React from 'react';
-import { Interface } from 'readline/promises';
-import { useAuth } from '../context/AuthContext';
 import { useChat } from '../context/ChatContext';
 import { PopulatedChatGroup } from '../types/Chats';
 
@@ -37,7 +35,6 @@ export const ChatLoading = () => {
 };
 
 const Chat = ({ recentMessage, id, members }: Props) => {
-	const { user } = useAuth();
 	const { setActiveChatId, activeChatId } = useChat();
 
 	const handleClick = () => {
