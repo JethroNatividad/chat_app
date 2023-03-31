@@ -1,7 +1,7 @@
-import { getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { getDoc, updateDoc } from 'firebase/firestore'
 import { User } from '../../types/User'
 import { auth } from '../firebase'
-import { userRef, usersRef } from '../refs/User'
+import { userRef } from '../refs/User'
 
 export const addFriend = async (userId: string) => {
 	// check if there is current user
@@ -88,13 +88,13 @@ export const getUserFriends = async (
 	}
 }
 
-export const searchUsers = async (search: string) => {
+export const searchUsers = async () => {
 	// search for every user that contains the search string in their name
-	const q = query(
-		usersRef,
-		where('username', '>=', search),
-		where('username', '<=', `${search}\uf8ff`)
-	)
+	// const q = query(
+	// 	usersRef,
+	// 	where('username', '>=', search),
+	// 	where('username', '<=', `${search}\uf8ff`)
+	// )
 	const res: User[] = []
 	// const users = (await getDocs(q)).forEach((user) => {
 	// 	if (user.data()) res.push(user.data());
