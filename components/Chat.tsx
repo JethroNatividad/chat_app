@@ -10,8 +10,6 @@ import React from 'react'
 import { useChat } from '../context/ChatContext'
 import { PopulatedChatGroup } from '../types/Chats'
 
-interface Props extends PopulatedChatGroup { }
-
 export const ChatLoading = () => {
 	return (
 		<Flex
@@ -34,7 +32,7 @@ export const ChatLoading = () => {
 	)
 }
 
-const Chat = ({ recentMessage, id, members }: Props) => {
+const Chat = ({ recentMessage, id, members }: PopulatedChatGroup) => {
 	const { setActiveChatId, activeChatId } = useChat()
 
 	const handleClick = () => {
