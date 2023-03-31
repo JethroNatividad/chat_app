@@ -1,13 +1,10 @@
-import { getDoc, onSnapshot } from 'firebase/firestore';
+import { onSnapshot } from 'firebase/firestore';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import useUser from '../hooks/useUser';
 import { auth } from '../lib/firebase';
-import { populateUserId, populateUserIds } from '../lib/functions/user';
+import { populateUserId } from '../lib/functions/user';
 import { chatGroupRef } from '../lib/refs/Chats';
-import { userRef } from '../lib/refs/User';
-import { ChatGroup, PopulatedChatGroup } from '../types/Chats';
-import { User } from '../types/User';
+import { PopulatedChatGroup } from '../types/Chats';
 
 type Props = {
 	chatGroupId: string;
@@ -51,9 +48,8 @@ const ChatItem = ({
 	return (
 		<div
 			onClick={handleClick}
-			className={`${
-				active ? 'bg-gray-100' : 'hover:bg-gray-200'
-			} flex space-x-2 items-center p-2 cursor-pointer rounded-lg`}
+			className={`${active ? 'bg-gray-100' : 'hover:bg-gray-200'
+				} flex space-x-2 items-center p-2 cursor-pointer rounded-lg`}
 		>
 			<div className='h-9 w-9 rounded-3xl bg-white relative overflow-hidden'>
 				{data?.members[0]?.profilePicture ? (
