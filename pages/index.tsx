@@ -5,6 +5,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import UserInfoBar from '../components/UserInfoBar';
 import ChatList from '../components/ChatList';
 import { useChat } from '../context/ChatContext';
+import React from 'react';
 
 const Home: NextPage = () => {
 	const { activeChatId } = useChat()
