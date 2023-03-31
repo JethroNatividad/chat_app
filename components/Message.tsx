@@ -29,7 +29,7 @@ const Message = ({ sentBy, message, timestamp }: Props) => {
                     <Text fontSize="lg" pr="2">{sentBy ? sentBy.username : "Unknown"}</Text>
                     <Text fontSize="xs" color="slategray">{moment(timestamp.toDate()).calendar()}</Text>
                 </Flex>
-                <Text color="gray.300">{message}adhffffffffffffffffffffffffff    dfasdfs fafaf asfsfdas f af asf as f asf</Text>
+                <Text color="gray.300">{message}</Text>
             </Box>
         </Flex>
     )

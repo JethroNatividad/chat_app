@@ -17,7 +17,7 @@ import {
 	PopulatedChatGroup,
 } from "../types/Chats";
 import { User } from "../types/User";
-import Message from "./Message";
+import Message from "./Message1";
 
 type Props = {
 	openChatGroupId: string;
@@ -116,7 +116,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
 							message.sentBy === currentUser?.uid
 								? currentUser.photoURL
 								: data?.members.find((user) => user.uid === message.sentBy)
-										?.profilePicture
+									?.profilePicture
 						}
 						userId={message.sentBy}
 						message={message.messageText}
