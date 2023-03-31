@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { searchUsers } from '../lib/functions/user';
-import { User } from '../types/User';
-import UserSearchResult from './UserSearchResult';
+import React, { useEffect, useState } from 'react'
+import { searchUsers } from '../lib/functions/user'
+import { User } from '../types/User'
+import UserSearchResult from './UserSearchResult'
 
 type Props = {
 	openChatGroupId: string | null;
@@ -9,30 +9,30 @@ type Props = {
 };
 
 const SearchBar = ({ setOpenChatGroupId }: Props) => {
-	const [searchText, setSearchText] = useState<string>('');
-	const [searchResults, setSearchResults] = useState<User[]>([]);
-	const [timeouts, setTimeouts] = useState<NodeJS.Timeout>();
+	const [searchText, setSearchText] = useState<string>('')
+	const [searchResults, setSearchResults] = useState<User[]>([])
+	const [timeouts, setTimeouts] = useState<NodeJS.Timeout>()
 
 	useEffect(() => {
 		const fn = async () => {
 			if (searchText !== '') {
-				const results = await searchUsers(searchText);
-				if (results) return setSearchResults(results);
+				const results = await searchUsers(searchText)
+				if (results) return setSearchResults(results)
 			}
-			return setSearchResults([]);
-		};
-		clearTimeout(timeouts);
+			return setSearchResults([])
+		}
+		clearTimeout(timeouts)
 
 		setTimeouts(
 			setTimeout(() => {
-				fn();
+				fn()
 			}, 1000)
-		);
-	}, [searchText, timeouts]);
+		)
+	}, [searchText, timeouts])
 
 	const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchText(e.target.value);
-	};
+		setSearchText(e.target.value)
+	}
 
 	// {"uniqueNumber":2,"username":"Jethro","following":[],"email":"kel73896@gmail.com","followers":[],"uid":"GXn7G4cupjP5YwGXWUOkLCxwSPK2","chatGroups":[], profilePicture: ""}
 	return (
@@ -59,7 +59,7 @@ const SearchBar = ({ setOpenChatGroupId }: Props) => {
 				))}
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default SearchBar;
+export default SearchBar

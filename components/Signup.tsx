@@ -1,7 +1,7 @@
-import { Formik } from 'formik';
-import React from 'react';
+import { Formik } from 'formik'
+import React from 'react'
 
-import NextLink from 'next/link';
+import NextLink from 'next/link'
 import {
 	Flex,
 	Box,
@@ -17,14 +17,14 @@ import {
 	useToast,
 	Divider,
 	Icon,
-} from '@chakra-ui/react';
-import { useAuth } from '../context/AuthContext';
-import { getErrorMessage } from '../lib/helpers';
-import { FcGoogle } from 'react-icons/fc';
+} from '@chakra-ui/react'
+import { useAuth } from '../context/AuthContext'
+import { getErrorMessage } from '../lib/helpers'
+import { FcGoogle } from 'react-icons/fc'
 
 const Signup = () => {
-	const { register, loginWithGoogle } = useAuth();
-	const toast = useToast();
+	const { register, loginWithGoogle } = useAuth()
+	const toast = useToast()
 	return (
 		<Flex
 			minH={'100vh'}
@@ -49,22 +49,22 @@ const Signup = () => {
 						initialValues={{ username: '', email: '', password: '' }}
 						onSubmit={async (fieldValues, { setSubmitting }) => {
 							try {
-								setSubmitting(true);
-								await register(fieldValues);
+								setSubmitting(true)
+								await register(fieldValues)
 								toast({
 									title: 'Welcome back!',
 									status: 'success',
 									isClosable: true,
-								});
+								})
 							} catch (error: unknown) {
-								const message: string = getErrorMessage(error);
+								const message: string = getErrorMessage(error)
 								toast({
 									title: message,
 									status: 'error',
 									isClosable: true,
-								});
+								})
 							}
-							setSubmitting(false);
+							setSubmitting(false)
 						}}
 					>
 						{({
@@ -145,19 +145,19 @@ const Signup = () => {
 											}}
 											onClick={async () => {
 												try {
-													await loginWithGoogle();
+													await loginWithGoogle()
 													toast({
 														title: 'Welcome back!',
 														status: 'success',
 														isClosable: true,
-													});
+													})
 												} catch (error: unknown) {
-													const message: string = getErrorMessage(error);
+													const message: string = getErrorMessage(error)
 													toast({
 														title: message,
 														status: 'error',
 														isClosable: true,
-													});
+													})
 												}
 											}}
 										>
@@ -171,7 +171,7 @@ const Signup = () => {
 				</Box>
 			</Stack>
 		</Flex>
-	);
-};
+	)
+}
 
-export default Signup;
+export default Signup

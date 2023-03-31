@@ -1,10 +1,10 @@
-import { Box } from '@chakra-ui/react';
-import React from 'react';
-import { useChat } from '../context/ChatContext';
-import Chat, { ChatLoading } from './Chat';
+import { Box } from '@chakra-ui/react'
+import React from 'react'
+import { useChat } from '../context/ChatContext'
+import Chat, { ChatLoading } from './Chat'
 
 const ChatList = () => {
-	const { chatList, chatListLoading } = useChat();
+	const { chatList, chatListLoading } = useChat()
 	return (
 		<div>
 			{chatListLoading ? (
@@ -21,7 +21,7 @@ const ChatList = () => {
 				</Box>
 			)}
 		</div>
-	);
-};
+	)
+}
 
-export default ChatList;
+export default ChatList

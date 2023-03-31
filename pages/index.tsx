@@ -1,11 +1,11 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import ChatView from '../components/ChatView';
-import { Box, Flex } from '@chakra-ui/react';
-import UserInfoBar from '../components/UserInfoBar';
-import ChatList from '../components/ChatList';
-import { useChat } from '../context/ChatContext';
-import React from 'react';
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import ChatView from '../components/ChatView'
+import { Box, Flex } from '@chakra-ui/react'
+import UserInfoBar from '../components/UserInfoBar'
+import ChatList from '../components/ChatList'
+import { useChat } from '../context/ChatContext'
+import React from 'react'
 
 const Home: NextPage = () => {
 	const { activeChatId } = useChat()
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
 				</Box>
 			</Box>
 		</div>
-	);
-};
+	)
+}
 
-export default Home;
+export default Home

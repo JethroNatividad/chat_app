@@ -1,12 +1,12 @@
-import React from 'react';
-import { CogIcon, UsersIcon } from '@heroicons/react/solid';
-import useUser from '../hooks/useUser';
+import React from 'react'
+import { CogIcon, UsersIcon } from '@heroicons/react/solid'
+import useUser from '../hooks/useUser'
 
-import Image from 'next/image';
+import Image from 'next/image'
 
 const Menu = () => {
-	const currentUser = useUser();
-	console.log(currentUser);
+	const currentUser = useUser()
+	console.log(currentUser)
 	// const chatGroupIds: string[] = currentUser?.chatGroups ?? [];
 	return (
 		<div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
@@ -50,7 +50,7 @@ const Menu = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Menu;
+export default Menu

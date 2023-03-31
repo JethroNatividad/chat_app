@@ -13,16 +13,16 @@ import {
 	MenuItem,
 	useColorMode,
 	Image,
-} from '@chakra-ui/react';
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
-import { GoSettings } from 'react-icons/go';
-import { BsSun, BsMoonStarsFill } from 'react-icons/bs';
-import { MdOutlineLogout } from 'react-icons/md';
+} from '@chakra-ui/react'
+import React from 'react'
+import { useAuth } from '../context/AuthContext'
+import { GoSettings } from 'react-icons/go'
+import { BsSun, BsMoonStarsFill } from 'react-icons/bs'
+import { MdOutlineLogout } from 'react-icons/md'
 
 const UserInfoBar = () => {
-	const { colorMode, toggleColorMode } = useColorMode();
-	const { user, userLoading, logout } = useAuth();
+	const { colorMode, toggleColorMode } = useColorMode()
+	const { user, userLoading, logout } = useAuth()
 
 	const Avatar = () => {
 		if (!userLoading && user) {
@@ -31,14 +31,14 @@ const UserInfoBar = () => {
 				boxSize='46px'
 				src={user.profilePicture}
 				alt='Dan Abramov'
-			/>;
+			/>
 		}
-		return <SkeletonCircle size='12' />;
-	};
+		return <SkeletonCircle size='12' />
+	}
 
 	const DisplayName = () => {
 		if (userLoading) {
-			return <Skeleton h={5} w={'40'} />;
+			return <Skeleton h={5} w={'40'} />
 		}
 
 		return (
@@ -55,8 +55,8 @@ const UserInfoBar = () => {
 					</Text>
 				</Flex>
 			</Tooltip>
-		);
-	};
+		)
+	}
 
 	return (
 		<Flex
@@ -109,7 +109,7 @@ const UserInfoBar = () => {
 				</MenuList>
 			</Menu>
 		</Flex>
-	);
-};
+	)
+}
 
-export default UserInfoBar;
+export default UserInfoBar

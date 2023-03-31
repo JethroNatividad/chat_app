@@ -1,8 +1,8 @@
-import { Timestamp } from 'firebase/firestore';
-import Image from 'next/image';
-import React from 'react';
+import { Timestamp } from 'firebase/firestore'
+import Image from 'next/image'
+import React from 'react'
 
-import moment from 'moment';
+import moment from 'moment'
 
 type Props = {
 	timestamp: Timestamp;
@@ -40,7 +40,7 @@ const Message = ({
 				<div className='text-slate-200'>{message}</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Message;
+export default Message

@@ -1,9 +1,9 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-import AuthProvider from '../context/AuthContext';
-import { ChakraProvider } from '@chakra-ui/react';
-import ChatProvider from '../context/ChatContext';
-import React from 'react';
+import '../styles/globals.css'
+import type { AppProps } from 'next/app'
+import AuthProvider from '../context/AuthContext'
+import { ChakraProvider } from '@chakra-ui/react'
+import ChatProvider from '../context/ChatContext'
+import React from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				</ChatProvider>
 			</AuthProvider>
 		</ChakraProvider>
-	);
+	)
 }
 
-export default MyApp;
+export default MyApp

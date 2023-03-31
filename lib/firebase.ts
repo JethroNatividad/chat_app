@@ -1,4 +1,4 @@
-import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app'
 import { collection, CollectionReference, DocumentData, getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 
@@ -10,9 +10,9 @@ const firebaseConfig: FirebaseOptions = {
     messagingSenderId: '754589067226',
     appId: '1:754589067226:web:1066a58ad5ea22eb1682e3',
     measurementId: 'G-VYL8D95KG1'
-  };
+  }
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 
 export const db = getFirestore(app)
 

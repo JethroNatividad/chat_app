@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from 'next/image'
+import React from 'react'
 import {
 	checkIfAlreadyInChatGroup,
 	createChatGroup,
-} from '../lib/functions/chats';
-import { User } from '../types/User';
+} from '../lib/functions/chats'
+import { User } from '../types/User'
 
 type Props = {
 	profilePicture: string;
@@ -24,13 +24,13 @@ const UserSearchResult = ({
 	setSearchResults,
 }: Props) => {
 	const handleClick = async () => {
-		const alreadyInChatGroup = await checkIfAlreadyInChatGroup(userId);
+		const alreadyInChatGroup = await checkIfAlreadyInChatGroup(userId)
 		if (alreadyInChatGroup) {
-			setSearchResults([]);
-			return setOpenChatGroupId(alreadyInChatGroup);
+			setSearchResults([])
+			return setOpenChatGroupId(alreadyInChatGroup)
 		}
-		return await createChatGroup([userId]);
-	};
+		return await createChatGroup([userId])
+	}
 
 	return (
 		<div
@@ -50,7 +50,7 @@ const UserSearchResult = ({
 				<p className='text-gray-50 font-semibold text-md'>#{uniqueNumber}</p>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default UserSearchResult;
+export default UserSearchResult

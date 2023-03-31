@@ -1,25 +1,25 @@
-import { onAuthStateChanged } from 'firebase/auth';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import Login from '../components/Login';
-import { auth } from '../lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
+import Login from '../components/Login'
+import { auth } from '../lib/firebase'
 
 const LoginPage = () => {
-	const router = useRouter();
+	const router = useRouter()
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) return router.push('/');
-		});
+			if (user) return router.push('/')
+		})
 		return () => {
-			unsubscribe();
-		};
-	}, [router]);
+			unsubscribe()
+		}
+	}, [router])
 
 	return (
 		<div>
 			<Login />
 		</div>
-	);
-};
+	)
+}
 
-export default LoginPage;
+export default LoginPage

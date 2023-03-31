@@ -5,10 +5,10 @@ import {
 	Skeleton,
 	SkeletonCircle,
 	Text,
-} from '@chakra-ui/react';
-import React from 'react';
-import { useChat } from '../context/ChatContext';
-import { PopulatedChatGroup } from '../types/Chats';
+} from '@chakra-ui/react'
+import React from 'react'
+import { useChat } from '../context/ChatContext'
+import { PopulatedChatGroup } from '../types/Chats'
 
 interface Props extends PopulatedChatGroup { }
 
@@ -31,18 +31,18 @@ export const ChatLoading = () => {
 				{/* <Text minH="1.5rem" fontSize="base" noOfLines={1}>{recentMessage?.messageText}</Text> */}
 			</Box>
 		</Flex>
-	);
-};
+	)
+}
 
 const Chat = ({ recentMessage, id, members }: Props) => {
-	const { setActiveChatId, activeChatId } = useChat();
+	const { setActiveChatId, activeChatId } = useChat()
 
 	const handleClick = () => {
-		if (activeChatId === id) return;
-		setActiveChatId(id);
-		console.log('Clicked on chat', id);
-	};
-	const memberNames = members.map((member) => member.username).join(', ');
+		if (activeChatId === id) return
+		setActiveChatId(id)
+		console.log('Clicked on chat', id)
+	}
+	const memberNames = members.map((member) => member.username).join(', ')
 	return (
 		<Flex
 			bg={activeChatId === id ? 'blackAlpha.100' : ''}
@@ -69,7 +69,7 @@ const Chat = ({ recentMessage, id, members }: Props) => {
 				</Text>
 			</Box>
 		</Flex>
-	);
-};
+	)
+}
 
-export default Chat;
+export default Chat

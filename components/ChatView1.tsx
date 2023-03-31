@@ -2,20 +2,20 @@ import {
 	ArrowLeftIcon,
 	PaperAirplaneIcon,
 	UserAddIcon,
-} from '@heroicons/react/solid';
-import { onSnapshot, orderBy, query } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import useChatScroll from '../hooks/useChatScoll';
-import { auth } from '../lib/firebase';
-import { sendMessage } from '../lib/functions/chats';
-import { populateUserId } from '../lib/functions/user';
-import { chatGroupRef, messagesRef } from '../lib/refs/Chats';
+} from '@heroicons/react/solid'
+import { onSnapshot, orderBy, query } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
+import useChatScroll from '../hooks/useChatScoll'
+import { auth } from '../lib/firebase'
+import { sendMessage } from '../lib/functions/chats'
+import { populateUserId } from '../lib/functions/user'
+import { chatGroupRef, messagesRef } from '../lib/refs/Chats'
 import {
 	Message as MessageType,
 	PopulatedChatGroup,
-} from '../types/Chats';
-import { User } from '../types/User';
-import Message from './Message1';
+} from '../types/Chats'
+import { User } from '../types/User'
+import Message from './Message1'
 
 type Props = {
 	openChatGroupId: string;
@@ -23,61 +23,61 @@ type Props = {
 };
 
 const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
-	const currentUser = auth.currentUser;
-	const [messages, setMessages] = useState<MessageType[]>([]);
-	const [input, setInput] = useState<string>('');
-	const [data, setData] = useState<PopulatedChatGroup>();
-	const ref = useChatScroll(messages);
+	const currentUser = auth.currentUser
+	const [messages, setMessages] = useState<MessageType[]>([])
+	const [input, setInput] = useState<string>('')
+	const [data, setData] = useState<PopulatedChatGroup>()
+	const ref = useChatScroll(messages)
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setInput(e.target.value);
-	};
+		setInput(e.target.value)
+	}
 
 	useEffect(() => {
 		const unsubscribe = onSnapshot(
 			chatGroupRef(openChatGroupId),
 			async (snapshot) => {
-				const data = snapshot.data();
+				const data = snapshot.data()
 
 				if (data && currentUser) {
 					// const filteredMembers = data.members.filter((id) => id !== currentUser.uid)
 					// const currentMember = await populateUserId(filteredMembers[0])
-					const members: User[] = [];
+					const members: User[] = []
 
 					data.members.forEach(async (id) => {
 						// if (id !== currentUser.uid) {
-						const member = await populateUserId(id);
-						if (member) members.push(member);
+						const member = await populateUserId(id)
+						if (member) members.push(member)
 						// }
-					});
-					console.log(members, 'members');
-					if (members) setData({ ...data, members });
+					})
+					console.log(members, 'members')
+					if (members) setData({ ...data, members })
 				}
 			}
-		);
+		)
 		return () => {
-			unsubscribe();
-		};
-	}, [openChatGroupId, currentUser]);
+			unsubscribe()
+		}
+	}, [openChatGroupId, currentUser])
 
 	useEffect(() => {
 		const unsubscribe = onSnapshot(
 			query(messagesRef(openChatGroupId), orderBy('sentAt', 'asc')),
 			(snapshot) => {
-				const data = snapshot.docs.map((doc) => doc.data() as MessageType);
-				setMessages(data);
+				const data = snapshot.docs.map((doc) => doc.data() as MessageType)
+				setMessages(data)
 			}
-		);
+		)
 		return () => {
-			unsubscribe();
-		};
-	}, [openChatGroupId]);
+			unsubscribe()
+		}
+	}, [openChatGroupId])
 
 	const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setInput('');
-		await sendMessage(openChatGroupId, input);
-	};
+		e.preventDefault()
+		setInput('')
+		await sendMessage(openChatGroupId, input)
+	}
 
 	return (
 		<div className='h-full w-full bg-primary-dark flex flex-col'>
@@ -92,7 +92,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
 					</div>
 					<h1 className='text-white text-xl font-semibold'>
 						{data?.members.map((member) => {
-							if (member.uid !== currentUser?.uid) return member.username;
+							if (member.uid !== currentUser?.uid) return member.username
 						})}
 					</h1>
 				</div>
@@ -142,7 +142,7 @@ const ChatView = ({ openChatGroupId, setOpenChatGroupId }: Props) => {
 				</form>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default ChatView;
+export default ChatView

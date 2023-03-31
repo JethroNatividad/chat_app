@@ -1,8 +1,8 @@
-import { Box, Flex, Image, SkeletonCircle, Text } from '@chakra-ui/react';
-import { Timestamp } from 'firebase/firestore';
-import moment from 'moment';
+import { Box, Flex, Image, SkeletonCircle, Text } from '@chakra-ui/react'
+import { Timestamp } from 'firebase/firestore'
+import moment from 'moment'
 import React from 'react'
-import { User } from '../types/User';
+import { User } from '../types/User'
 
 type Props = {
     timestamp: Timestamp;

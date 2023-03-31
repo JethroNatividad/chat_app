@@ -6,7 +6,7 @@ import Message from './Message'
 
 const ChatView = () => {
     const { activeChat, setActiveChatId } = useChat()
-    const memberNames = activeChat?.members.map((member) => member.username).join(', ');
+    const memberNames = activeChat?.members.map((member) => member.username).join(', ')
 
     return (
         <Box>

@@ -1,10 +1,10 @@
-import { onSnapshot } from 'firebase/firestore';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { auth } from '../lib/firebase';
-import { populateUserId } from '../lib/functions/user';
-import { chatGroupRef } from '../lib/refs/Chats';
-import { PopulatedChatGroup } from '../types/Chats';
+import { onSnapshot } from 'firebase/firestore'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
+import { auth } from '../lib/firebase'
+import { populateUserId } from '../lib/functions/user'
+import { chatGroupRef } from '../lib/refs/Chats'
+import { PopulatedChatGroup } from '../types/Chats'
 
 type Props = {
 	chatGroupId: string;
@@ -17,33 +17,33 @@ const ChatItem = ({
 	openChatGroupId,
 	setOpenChatGroupId,
 }: Props) => {
-	const currentUser = auth.currentUser;
-	const [data, setData] = useState<PopulatedChatGroup>();
-	const active = openChatGroupId === chatGroupId;
+	const currentUser = auth.currentUser
+	const [data, setData] = useState<PopulatedChatGroup>()
+	const active = openChatGroupId === chatGroupId
 	const handleClick = () => {
-		if (!active) setOpenChatGroupId(chatGroupId);
-	};
+		if (!active) setOpenChatGroupId(chatGroupId)
+	}
 
 	useEffect(() => {
 		const unsubscribe = onSnapshot(
 			chatGroupRef(chatGroupId),
 			async (snapshot) => {
-				const data = snapshot.data();
+				const data = snapshot.data()
 
 				if (data && currentUser) {
 					const filteredMembers = data.members.filter(
 						(id) => id !== currentUser.uid
-					);
-					const currentMember = await populateUserId(filteredMembers[0]);
-					console.log(currentMember, 'members');
-					if (currentMember) setData({ ...data, members: [currentMember] });
+					)
+					const currentMember = await populateUserId(filteredMembers[0])
+					console.log(currentMember, 'members')
+					if (currentMember) setData({ ...data, members: [currentMember] })
 				}
 			}
-		);
+		)
 		return () => {
-			unsubscribe();
-		};
-	}, [chatGroupId, currentUser]);
+			unsubscribe()
+		}
+	}, [chatGroupId, currentUser])
 
 	return (
 		<div
@@ -70,7 +70,7 @@ const ChatItem = ({
 				</p>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default ChatItem;
+export default ChatItem
