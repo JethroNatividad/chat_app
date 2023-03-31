@@ -23,9 +23,9 @@ const Message = ({ sentBy, message, timestamp }: Props) => {
                 />
             )}
             <Flex>
-                <Flex>
-                    <Text>{sentBy && sentBy.username}</Text>
-                    <Text>{moment(timestamp.toDate()).calendar()}</Text>
+                <Flex alignItems="center">
+                    <Text fontSize="lg" pr="2">{sentBy && sentBy.username}</Text>
+                    <Text fontSize="xs" color="slategray">{moment(timestamp.toDate()).calendar()}</Text>
                 </Flex>
             </Flex>
 
