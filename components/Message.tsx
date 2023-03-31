@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, SkeletonCircle, Text } from '@chakra-ui/react';
 import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
 import React from 'react'
@@ -12,8 +12,8 @@ type Props = {
 
 const Message = ({ sentBy, message, timestamp }: Props) => {
     return (
-        <Flex>
-            {sentBy && (
+        <Flex px="5" py="1">
+            {sentBy ? (
                 <Image
                     borderRadius="full"
                     boxSize="46px"
@@ -21,14 +21,16 @@ const Message = ({ sentBy, message, timestamp }: Props) => {
                     alt="Profile Picture"
                     mr="3"
                 />
+            ) : (
+                <SkeletonCircle size="12" />
             )}
-            <Flex>
+            <Box>
                 <Flex alignItems="center">
-                    <Text fontSize="lg" pr="2">{sentBy && sentBy.username}</Text>
+                    <Text fontSize="lg" pr="2">{sentBy ? sentBy.username : "Unknown"}</Text>
                     <Text fontSize="xs" color="slategray">{moment(timestamp.toDate()).calendar()}</Text>
                 </Flex>
-            </Flex>
-
+                <Text color="gray.300">{message}adhffffffffffffffffffffffffff    dfasdfs fafaf asfsfdas f af asf as f asf</Text>
+            </Box>
         </Flex>
     )
 }
