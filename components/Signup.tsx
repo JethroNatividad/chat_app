@@ -22,9 +22,7 @@ import { useAuth } from '../context/AuthContext';
 import { getErrorMessage } from '../lib/helpers';
 import { FcGoogle } from 'react-icons/fc';
 
-type Props = {};
-
-const Signup = (props: Props) => {
+const Signup = () => {
 	const { register, loginWithGoogle } = useAuth();
 	const toast = useToast();
 	return (

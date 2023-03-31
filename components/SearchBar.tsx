@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { searchUsers } from '../lib/functions/user';
 import { User } from '../types/User';

@@ -4,7 +4,6 @@ import {
 	IconButton,
 	Skeleton,
 	SkeletonCircle,
-	SkeletonText,
 	Text,
 	Tooltip,
 	Icon,
@@ -21,9 +20,7 @@ import { GoSettings } from 'react-icons/go';
 import { BsSun, BsMoonStarsFill } from 'react-icons/bs';
 import { MdOutlineLogout } from 'react-icons/md';
 
-type Props = {};
-
-const UserInfoBar = (props: Props) => {
+const UserInfoBar = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
 	const { user, userLoading, logout } = useAuth();
 

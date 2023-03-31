@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CogIcon, UsersIcon } from '@heroicons/react/solid';
-import ChatItem from './ChatItemOld';
 import useUser from '../hooks/useUser';
-import { ChatGroup } from '../types/Chats';
-import SearchBar from './SearchBar';
+
 import Image from 'next/image';
 
 const Menu = () => {
 	const currentUser = useUser();
 	console.log(currentUser);
-	const chatGroupIds: string[] = currentUser?.chatGroups ?? [];
+	// const chatGroupIds: string[] = currentUser?.chatGroups ?? [];
 	return (
 		<div className='w-full flex flex-col justify-between h-full bg-secondary-dark'>
 			{/* Header */}

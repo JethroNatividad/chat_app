@@ -22,9 +22,7 @@ import { useAuth } from '../context/AuthContext';
 import { getErrorMessage } from '../lib/helpers';
 import { FcGoogle } from 'react-icons/fc';
 
-type Props = {};
-
-const Login = (props: Props) => {
+const Login = () => {
 	const { login, loginWithGoogle } = useAuth();
 	const toast = useToast();
 	return (
@@ -49,7 +47,7 @@ const Login = (props: Props) => {
 				>
 					<Formik
 						initialValues={{ email: '', password: '' }}
-						onSubmit={async (fieldValues, { setSubmitting, setFieldValue }) => {
+						onSubmit={async (fieldValues, { setSubmitting }) => {
 							try {
 								setSubmitting(true);
 								await login(fieldValues);

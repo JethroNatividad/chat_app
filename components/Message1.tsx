@@ -1,8 +1,7 @@
-import { FieldValue, Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { populateUserId } from '../lib/functions/user';
-import { User } from '../types/User';
+import React from 'react';
+
 import moment from 'moment';
 
 type Props = {
@@ -15,7 +14,6 @@ type Props = {
 
 const Message = ({
 	message,
-	userId,
 	timestamp,
 	profilePicture,
 	username,

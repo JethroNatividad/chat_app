@@ -96,9 +96,9 @@ export const searchUsers = async (search: string) => {
 		where('username', '<=', `${search}\uf8ff`)
 	);
 	const res: User[] = [];
-	const users = (await getDocs(q)).forEach((user) => {
-		if (user.data()) res.push(user.data());
-	});
+	// const users = (await getDocs(q)).forEach((user) => {
+	// 	if (user.data()) res.push(user.data());
+	// });
 	return res;
 };
 
