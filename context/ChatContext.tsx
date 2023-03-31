@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useAuth } from './AuthContext';
-import { ActiveChat, Message, PopulatedChatGroup } from '../types/Chats';
+import { ActiveChat, Message, PopulatedChatGroup, PopulatedMessage } from '../types/Chats';
 import { onSnapshot, orderBy, query, Unsubscribe } from 'firebase/firestore';
 import { chatGroupRef, messagesRef } from '../lib/refs/Chats';
 import { User } from '../types/User';
@@ -41,9 +41,15 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 const unsubscribe = onSnapshot(query(messagesRef(activeChatId), orderBy("sentAt", "asc")),
                     (snapshot) => {
                         const data = snapshot.docs.map((doc) => doc.data() as Message);
+                        // populate the message with the sender name, avatar, etc.
+                        const populatedMessages: PopulatedMessage[] = data.map((message) => (
+                            // the users are already in the chat group, so we can just get the user from the chat group
+                            { ...message, sentBy: activeChatGroup?.members.find((member) => member.uid === message.sentBy) ?? null }
+                        ))
+
                         setActiveChat((prev) => {
                             if (prev) {
-                                return { ...prev, messages: data }
+                                return { ...prev, messages: populatedMessages }
                             }
                             return null
                         });
