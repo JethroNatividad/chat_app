@@ -2,6 +2,7 @@ import { Box, Flex, IconButton, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useChat } from '../context/ChatContext'
 import { RxChevronLeft } from 'react-icons/rx'
+import Message from './Message'
 
 type Props = {}
 
@@ -28,6 +29,15 @@ const ChatView = (props: Props) => {
                     {memberNames}
                 </Text>
             </Flex>
+            <Box>
+                {activeChat !== null ? (
+                    activeChat.messages.map((message) => (
+                        <Message message={message.messageText} timestamp={message.sentAt} sentBy={message.sentBy} />
+                    ))
+                ) : (
+                    <div>Loading...</div>
+                )}
+            </Box>
         </Box>
     )
 }
