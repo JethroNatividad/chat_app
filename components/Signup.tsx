@@ -137,7 +137,7 @@ const Signup = () => {
 										</Button>
 										<Divider orientation='horizontal' />
 										<Button
-											leftIcon={<Icon as={FcGoogle as any} />}
+											leftIcon={<Icon as={FcGoogle} />}
 											bg={'white'}
 											color={'gray.700'}
 											_hover={{
