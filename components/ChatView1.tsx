@@ -1,6 +1,5 @@
 import {
 	ArrowLeftIcon,
-	MenuIcon,
 	PaperAirplaneIcon,
 	UserAddIcon,
 } from '@heroicons/react/solid';
@@ -12,7 +11,6 @@ import { sendMessage } from '../lib/functions/chats';
 import { populateUserId } from '../lib/functions/user';
 import { chatGroupRef, messagesRef } from '../lib/refs/Chats';
 import {
-	ChatGroup,
 	Message as MessageType,
 	PopulatedChatGroup,
 } from '../types/Chats';

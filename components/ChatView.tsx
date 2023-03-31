@@ -4,10 +4,8 @@ import { useChat } from '../context/ChatContext'
 import { RxChevronLeft } from 'react-icons/rx'
 import Message from './Message'
 
-type Props = {}
-
-const ChatView = (props: Props) => {
-    const { activeChat, activeChatLoading, chatList, setActiveChatId } = useChat()
+const ChatView = () => {
+    const { activeChat, setActiveChatId } = useChat()
     const memberNames = activeChat?.members.map((member) => member.username).join(', ');
 
     return (

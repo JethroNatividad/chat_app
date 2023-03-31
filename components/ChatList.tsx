@@ -3,9 +3,7 @@ import React from 'react';
 import { useChat } from '../context/ChatContext';
 import Chat, { ChatLoading } from './Chat';
 
-type Props = {};
-
-const ChatList = (props: Props) => {
+const ChatList = () => {
 	const { chatList, chatListLoading } = useChat();
 	return (
 		<div>
