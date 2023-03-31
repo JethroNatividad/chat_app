@@ -7,6 +7,10 @@ export type Message = {
     sentBy: string
 }
 
+export type PopulatedMessage = Omit<Message, 'sentBy'> & {
+    sentBy: User | null
+}
+
 export type RecentMessage = Message & {
     readBy: string[]
 }
@@ -24,7 +28,7 @@ export type PopulatedChatGroup = Omit<ChatGroup, 'members'> & {
 
 export type ActiveChat = {
     id: string
-    messages: Message[],
+    messages: PopulatedMessage[],
     members: User[]
 }
 
