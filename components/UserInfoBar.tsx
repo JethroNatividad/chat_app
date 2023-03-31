@@ -75,7 +75,7 @@ const UserInfoBar = () => {
 			<Menu>
 				<MenuButton
 					as={IconButton}
-					icon={<Icon as={GoSettings as any} />}
+					icon={<Icon as={GoSettings} />}
 					variant='outline'
 					colorScheme='teal'
 					aria-label='Settings'
