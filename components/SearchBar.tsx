@@ -16,7 +16,7 @@ const SearchBar = ({ setOpenChatGroupId }: Props) => {
 	useEffect(() => {
 		const fn = async () => {
 			if (searchText !== '') {
-				const results = await searchUsers(searchText)
+				const results = await searchUsers()
 				if (results) return setSearchResults(results)
 			}
 			return setSearchResults([])

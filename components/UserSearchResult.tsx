@@ -24,7 +24,7 @@ const UserSearchResult = ({
 	setSearchResults,
 }: Props) => {
 	const handleClick = async () => {
-		const alreadyInChatGroup = await checkIfAlreadyInChatGroup(userId)
+		const alreadyInChatGroup = await checkIfAlreadyInChatGroup()
 		if (alreadyInChatGroup) {
 			setSearchResults([])
 			return setOpenChatGroupId(alreadyInChatGroup)
