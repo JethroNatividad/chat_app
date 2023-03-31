@@ -1,5 +1,5 @@
-import { getDoc, setDoc } from "firebase/firestore"
-import { lastUniqueNumberRef } from "./refs/User"
+import { getDoc, setDoc } from 'firebase/firestore'
+import { lastUniqueNumberRef } from './refs/User'
 
 export const getErrorMessage = (error: unknown): string => {
     if (error instanceof Error) return error.message

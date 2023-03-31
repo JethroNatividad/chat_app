@@ -1,9 +1,9 @@
-import { addDoc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from "firebase/firestore"
-import { ChatGroup, ChatGroupWithoutId, Message, RecentMessage } from "../../types/Chats"
-import { auth } from "../firebase"
-import { chatGroupRef, chatGroupsRef, messagesRef } from "../refs/Chats"
-import { userRef } from "../refs/User"
-import { populateUserId } from "./user"
+import { addDoc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
+import { ChatGroup, ChatGroupWithoutId, Message, RecentMessage } from '../../types/Chats'
+import { auth } from '../firebase'
+import { chatGroupRef, chatGroupsRef, messagesRef } from '../refs/Chats'
+import { userRef } from '../refs/User'
+import { populateUserId } from './user'
 
 export const populateChatGroups = async (chatGroupIds: string[]) => {
     const chatGroups = await Promise.all(chatGroupIds.map(async id => {

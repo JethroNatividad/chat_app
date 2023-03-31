@@ -1,6 +1,6 @@
-import { doc } from "firebase/firestore";
-import { LastUniqueNumber, User } from "../../types/User";
-import { createCollection } from "../firebase";
+import { doc } from 'firebase/firestore';
+import { LastUniqueNumber, User } from '../../types/User';
+import { createCollection } from '../firebase';
 
 export const usersRef = createCollection<User>('users')
 

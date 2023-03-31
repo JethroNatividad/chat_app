@@ -1,7 +1,7 @@
-import { Formik } from "formik";
-import React from "react";
+import { Formik } from 'formik';
+import React from 'react';
 
-import NextLink from "next/link";
+import NextLink from 'next/link';
 import {
 	Flex,
 	Box,
@@ -17,10 +17,10 @@ import {
 	useToast,
 	Divider,
 	Icon,
-} from "@chakra-ui/react";
-import { useAuth } from "../context/AuthContext";
-import { getErrorMessage } from "../lib/helpers";
-import { FcGoogle } from "react-icons/fc";
+} from '@chakra-ui/react';
+import { useAuth } from '../context/AuthContext';
+import { getErrorMessage } from '../lib/helpers';
+import { FcGoogle } from 'react-icons/fc';
 
 type Props = {};
 
@@ -29,40 +29,40 @@ const Login = (props: Props) => {
 	const toast = useToast();
 	return (
 		<Flex
-			minH={"100vh"}
-			align={"center"}
-			justify={"center"}
-			bg={useColorModeValue("gray.50", "gray.800")}
+			minH={'100vh'}
+			align={'center'}
+			justify={'center'}
+			bg={useColorModeValue('gray.50', 'gray.800')}
 		>
-			<Stack spacing={4} mx={"auto"} maxW={"lg"} py={12} px={6}>
-				<Stack align={"center"}>
-					<Heading fontSize={"4xl"}>Sign in to your account</Heading>
-					<Text fontSize={"lg"} color={"gray.600"}>
+			<Stack spacing={4} mx={'auto'} maxW={'lg'} py={12} px={6}>
+				<Stack align={'center'}>
+					<Heading fontSize={'4xl'}>Sign in to your account</Heading>
+					<Text fontSize={'lg'} color={'gray.600'}>
 						😎👍 Chat with anyone, anywhere.
 					</Text>
 				</Stack>
 				<Box
-					rounded={"lg"}
-					bg={useColorModeValue("white", "gray.700")}
-					boxShadow={"lg"}
+					rounded={'lg'}
+					bg={useColorModeValue('white', 'gray.700')}
+					boxShadow={'lg'}
 					p={4}
 				>
 					<Formik
-						initialValues={{ email: "", password: "" }}
+						initialValues={{ email: '', password: '' }}
 						onSubmit={async (fieldValues, { setSubmitting, setFieldValue }) => {
 							try {
 								setSubmitting(true);
 								await login(fieldValues);
 								toast({
-									title: "Welcome back!",
-									status: "success",
+									title: 'Welcome back!',
+									status: 'success',
 									isClosable: true,
 								});
 							} catch (error: unknown) {
 								const message: string = getErrorMessage(error);
 								toast({
 									title: message,
-									status: "error",
+									status: 'error',
 									isClosable: true,
 								});
 							}
@@ -78,75 +78,75 @@ const Login = (props: Props) => {
 							/* and other goodies */
 						}) => (
 							<form
-								className="flex flex-col w-full p-5 space-y-3 "
+								className='flex flex-col w-full p-5 space-y-3 '
 								onSubmit={handleSubmit}
 							>
 								<Stack spacing={4}>
-									<FormControl id="email">
+									<FormControl id='email'>
 										<FormLabel>Email address</FormLabel>
 										<Input
 											required
 											onChange={handleChange}
 											onBlur={handleBlur}
 											value={values.email}
-											type="email"
-											name="email"
+											type='email'
+											name='email'
 										/>
 									</FormControl>
-									<FormControl id="password">
+									<FormControl id='password'>
 										<FormLabel>Password</FormLabel>
 										<Input
 											required
 											onChange={handleChange}
 											onBlur={handleBlur}
 											value={values.password}
-											name="password"
-											type="password"
+											name='password'
+											type='password'
 										/>
 									</FormControl>
 									<Stack spacing={10}>
 										<Stack
-											direction={{ base: "column", sm: "row" }}
-											align={"start"}
+											direction={{ base: 'column', sm: 'row' }}
+											align={'start'}
 										>
 											{/* <NextLink as={}></NextLink> */}
 											<Text>New here?</Text>
-											<NextLink href="signup" passHref>
-												<Link color={"blue.400"}>Create an account</Link>
+											<NextLink href='signup' passHref>
+												<Link color={'blue.400'}>Create an account</Link>
 											</NextLink>
 										</Stack>
 										<Button
-											bg={"blue.400"}
-											color={"white"}
+											bg={'blue.400'}
+											color={'white'}
 											_hover={{
-												bg: "blue.500",
+												bg: 'blue.500',
 											}}
 											isLoading={isSubmitting}
-											type="submit"
+											type='submit'
 										>
 											Sign in
 										</Button>
-										<Divider orientation="horizontal" />
+										<Divider orientation='horizontal' />
 										<Button
 											leftIcon={<Icon as={FcGoogle as any} />}
-											bg={"white"}
-											color={"gray.700"}
+											bg={'white'}
+											color={'gray.700'}
 											_hover={{
-												bg: "white",
+												bg: 'white',
 											}}
 											onClick={async () => {
 												try {
 													await loginWithGoogle();
 													toast({
-														title: "Welcome back!",
-														status: "success",
+														title: 'Welcome back!',
+														status: 'success',
 														isClosable: true,
 													});
 												} catch (error: unknown) {
 													const message: string = getErrorMessage(error);
 													toast({
 														title: message,
-														status: "error",
+														status: 'error',
 														isClosable: true,
 													});
 												}

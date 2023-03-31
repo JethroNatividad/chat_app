@@ -12,24 +12,24 @@ type Props = {
 
 const Message = ({ sentBy, message, timestamp }: Props) => {
     return (
-        <Flex px="5" py="1">
+        <Flex px='5' py='1'>
             {sentBy ? (
                 <Image
-                    borderRadius="full"
-                    boxSize="46px"
+                    borderRadius='full'
+                    boxSize='46px'
                     src={sentBy.profilePicture}
-                    alt="Profile Picture"
-                    mr="3"
+                    alt='Profile Picture'
+                    mr='3'
                 />
             ) : (
-                <SkeletonCircle size="12" />
+                <SkeletonCircle size='12' />
             )}
             <Box>
-                <Flex alignItems="center">
-                    <Text fontSize="lg" pr="2">{sentBy ? sentBy.username : "Unknown"}</Text>
-                    <Text fontSize="xs" color="slategray">{moment(timestamp.toDate()).calendar()}</Text>
+                <Flex alignItems='center'>
+                    <Text fontSize='lg' pr='2'>{sentBy ? sentBy.username : 'Unknown'}</Text>
+                    <Text fontSize='xs' color='slategray'>{moment(timestamp.toDate()).calendar()}</Text>
                 </Flex>
-                <Text color="gray.300">{message}</Text>
+                <Text color='gray.300'>{message}</Text>
             </Box>
         </Flex>
     )

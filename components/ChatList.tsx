@@ -1,7 +1,7 @@
-import { Box } from "@chakra-ui/react";
-import React from "react";
-import { useChat } from "../context/ChatContext";
-import Chat, { ChatLoading } from "./Chat";
+import { Box } from '@chakra-ui/react';
+import React from 'react';
+import { useChat } from '../context/ChatContext';
+import Chat, { ChatLoading } from './Chat';
 
 type Props = {};
 

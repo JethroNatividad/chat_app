@@ -14,12 +14,12 @@ import {
 	MenuItem,
 	useColorMode,
 	Image,
-} from "@chakra-ui/react";
-import React from "react";
-import { useAuth } from "../context/AuthContext";
-import { GoSettings } from "react-icons/go";
-import { BsSun, BsMoonStarsFill } from "react-icons/bs";
-import { MdOutlineLogout } from "react-icons/md";
+} from '@chakra-ui/react';
+import React from 'react';
+import { useAuth } from '../context/AuthContext';
+import { GoSettings } from 'react-icons/go';
+import { BsSun, BsMoonStarsFill } from 'react-icons/bs';
+import { MdOutlineLogout } from 'react-icons/md';
 
 type Props = {};
 
@@ -36,24 +36,24 @@ const UserInfoBar = (props: Props) => {
 				alt='Dan Abramov'
 			/>;
 		}
-		return <SkeletonCircle size="12" />;
+		return <SkeletonCircle size='12' />;
 	};
 
 	const DisplayName = () => {
 		if (userLoading) {
-			return <Skeleton h={5} w={"40"} />;
+			return <Skeleton h={5} w={'40'} />;
 		}
 
 		return (
 			<Tooltip
 				label={`${user?.username}#${user?.uniqueNumber}`}
-				aria-label="Username tooltip"
+				aria-label='Username tooltip'
 			>
 				<Flex>
-					<Text fontSize="lg" noOfLines={1}>
+					<Text fontSize='lg' noOfLines={1}>
 						{user?.username}
 					</Text>
-					<Text fontSize="lg" textColor="gray.500">
+					<Text fontSize='lg' textColor='gray.500'>
 						#{user?.uniqueNumber}
 					</Text>
 				</Flex>
@@ -63,15 +63,15 @@ const UserInfoBar = (props: Props) => {
 
 	return (
 		<Flex
-			alignItems="center"
-			justifyContent="space-between"
-			bg="blackAlpha.300"
-			px="5"
-			py="3"
+			alignItems='center'
+			justifyContent='space-between'
+			bg='blackAlpha.300'
+			px='5'
+			py='3'
 		>
-			<Flex alignItems="center">
+			<Flex alignItems='center'>
 				<Avatar />
-				<Box mx="3">
+				<Box mx='3'>
 					<DisplayName />
 				</Box>
 			</Flex>
@@ -79,33 +79,33 @@ const UserInfoBar = (props: Props) => {
 				<MenuButton
 					as={IconButton}
 					icon={<Icon as={GoSettings as any} />}
-					variant="outline"
-					colorScheme="teal"
-					aria-label="Settings"
+					variant='outline'
+					colorScheme='teal'
+					aria-label='Settings'
 				>
 					Actions
 				</MenuButton>
 				<MenuList>
 					<MenuItem onClick={logout}>
 						<MdOutlineLogout />
-						<Text mx="2">Log out</Text>
+						<Text mx='2'>Log out</Text>
 					</MenuItem>
 					<MenuItem
 						closeOnSelect={false}
-						aria-label="Toggle Color Mode"
+						aria-label='Toggle Color Mode'
 						onClick={toggleColorMode}
-						display="flex"
-						alignItems="center"
+						display='flex'
+						alignItems='center'
 					>
-						{colorMode === "light" ? (
+						{colorMode === 'light' ? (
 							<>
 								<BsMoonStarsFill />
-								<Text mx="2">Dark mode</Text>
+								<Text mx='2'>Dark mode</Text>
 							</>
 						) : (
 							<>
 								<BsSun />
-								<Text mx="2">Light mode</Text>
+								<Text mx='2'>Light mode</Text>
 							</>
 						)}
 					</MenuItem>
