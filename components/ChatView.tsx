@@ -31,8 +31,8 @@ const ChatView = (props: Props) => {
             </Flex>
             <Box>
                 {activeChat !== null ? (
-                    activeChat.messages.map((message) => (
-                        <Message message={message.messageText} timestamp={message.sentAt} sentBy={message.sentBy} />
+                    activeChat.messages.map((message, i) => (
+                        <Message key={message.messageText + message.sentAt + i} message={message.messageText} timestamp={message.sentAt} sentBy={message.sentBy} />
                     ))
                 ) : (
                     <div>Loading...</div>
