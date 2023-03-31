@@ -1,13 +1,7 @@
-import { onAuthStateChanged } from 'firebase/auth';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import ChatView from '../components/ChatView';
-import Menu from '../components/Menu';
-import { auth } from '../lib/firebase';
-import { Box, Button, Flex, Slide } from '@chakra-ui/react';
-import { useAuth } from '../context/AuthContext';
+import { Box, Flex } from '@chakra-ui/react';
 import UserInfoBar from '../components/UserInfoBar';
 import ChatList from '../components/ChatList';
 import { useChat } from '../context/ChatContext';
