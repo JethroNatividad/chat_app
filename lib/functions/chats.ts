@@ -1,5 +1,5 @@
-import { addDoc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
-import { ChatGroup, ChatGroupWithoutId, Message, RecentMessage } from '../../types/Chats'
+import { addDoc, getDoc, Timestamp, updateDoc } from 'firebase/firestore'
+import { ChatGroup, Message, RecentMessage } from '../../types/Chats'
 import { auth } from '../firebase'
 import { chatGroupRef, chatGroupsRef, messagesRef } from '../refs/Chats'
 import { userRef } from '../refs/User'
