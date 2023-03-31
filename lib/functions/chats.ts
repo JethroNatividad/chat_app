@@ -13,7 +13,7 @@ export const populateChatGroups = async (chatGroupIds: string[]) => {
     return chatGroups
 }
 
-export const checkIfAlreadyInChatGroup = async (userId: string) => {
+export const checkIfAlreadyInChatGroup = async () => {
     const currentUser = auth.currentUser
     if (!currentUser) return
 
