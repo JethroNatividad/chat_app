@@ -4,9 +4,7 @@ import React, { useEffect } from 'react';
 import Signup from '../components/Signup';
 import { auth } from '../lib/firebase';
 
-type Props = {};
-
-const SignupPage = (props: Props) => {
+const SignupPage = () => {
 	const router = useRouter();
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
