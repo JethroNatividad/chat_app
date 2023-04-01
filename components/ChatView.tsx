@@ -9,7 +9,7 @@ const ChatView = () => {
     const memberNames = activeChat?.members.map((member) => member.username).join(', ')
 
     return (
-        <Flex flexDirection="column" h="full">
+        <Flex flexDirection='column' h='full'>
             <Flex alignItems='center' px='5' shadow='lg' minH='14'>
                 <div
                     className='flex md:hidden text-white cursor-pointer'
@@ -40,13 +40,14 @@ const ChatView = () => {
                     </>
                 )}
             </Box>
-            <Box px="3" my="3">
+            <Box px='3' my='3'>
                 <form autoComplete='false'>
                     <InputGroup>
                         <InputRightElement
                             pointerEvents='all'
-                            children={<Icon cursor="pointer" as={AiOutlineSend} />}
-                        />
+                        >
+                            <Icon cursor='pointer' as={AiOutlineSend} />
+                        </InputRightElement>
                         <Input focusBorderColor='teal.300' />
                     </InputGroup>
                 </form>
