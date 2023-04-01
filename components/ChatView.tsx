@@ -1,15 +1,15 @@
-import { Box, Flex, IconButton, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, IconButton, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useChat } from '../context/ChatContext'
 import { RxChevronLeft } from 'react-icons/rx'
 import Message, { MessageSkeleton } from './Message'
-
+import { AiOutlineSend } from 'react-icons/ai'
 const ChatView = () => {
     const { activeChat, setActiveChatId } = useChat()
     const memberNames = activeChat?.members.map((member) => member.username).join(', ')
 
     return (
-        <Box>
+        <Flex flexDirection="column" h="full">
             <Flex alignItems='center' px='5' shadow='lg' minH='14'>
                 <div
                     className='flex md:hidden text-white cursor-pointer'
@@ -27,8 +27,7 @@ const ChatView = () => {
                     {memberNames}
                 </Text>
             </Flex>
-            <Box>
-
+            <Box flex={1}>
                 {activeChat !== null ? (
                     activeChat.messages.map((message, i) => (
                         <Message key={message.messageText + message.sentAt + i} message={message.messageText} timestamp={message.sentAt} sentBy={message.sentBy} />
@@ -41,7 +40,18 @@ const ChatView = () => {
                     </>
                 )}
             </Box>
-        </Box>
+            <Box px="3" my="3">
+                <form autoComplete='false'>
+                    <InputGroup>
+                        <InputRightElement
+                            pointerEvents='all'
+                            children={<Icon cursor="pointer" as={AiOutlineSend} />}
+                        />
+                        <Input focusBorderColor='teal.300' />
+                    </InputGroup>
+                </form>
+            </Box>
+        </Flex>
     )
 }
 
