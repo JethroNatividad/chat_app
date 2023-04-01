@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import React from 'react'
 import { useChat } from '../context/ChatContext'
-import Chat, { ChatLoading } from './Chat'
+import Chat, { ChatSkeleton } from './Chat'
 
 const ChatList = () => {
 	const { chatList, chatListLoading } = useChat()
@@ -10,7 +10,7 @@ const ChatList = () => {
 			{chatListLoading ? (
 				<Box>
 					{[...Array(5)].map((_, i) => (
-						<ChatLoading key={i} />
+						<ChatSkeleton key={i} />
 					))}
 				</Box>
 			) : (

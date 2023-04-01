@@ -10,7 +10,7 @@ import React from 'react'
 import { useChat } from '../context/ChatContext'
 import { PopulatedChatGroup } from '../types/Chats'
 
-export const ChatLoading = () => {
+export const ChatSkeleton = () => {
 	return (
 		<Flex
 			cursor='pointer'
