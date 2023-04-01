@@ -1,15 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useState, useEffect, useContext } from 'react'
-import { useAuth } from './AuthContext';
-import { ActiveChat, Message, PopulatedChatGroup, PopulatedMessage } from '../types/Chats';
-import { onSnapshot, orderBy, query, Unsubscribe } from 'firebase/firestore';
-import { chatGroupRef, messagesRef } from '../lib/refs/Chats';
-import { User } from '../types/User';
-import { populateUserId } from '../lib/functions/user';
+import { useAuth } from './AuthContext'
+import { ActiveChat, Message, PopulatedChatGroup, PopulatedMessage } from '../types/Chats'
+import { onSnapshot, orderBy, query, Unsubscribe } from 'firebase/firestore'
+import { chatGroupRef, messagesRef } from '../lib/refs/Chats'
+import { User } from '../types/User'
+import { populateUserId } from '../lib/functions/user'
+import React from 'react'
 interface IChatContext {
     activeChatId: string | null;
     activeChat: ActiveChat | null;
     activeChatLoading: boolean;
     setActiveChatId: (value: string | null) => void;
+    clearChatState: () => void;
     chatList: PopulatedChatGroup[];
     chatListLoading: boolean;
 }
@@ -21,26 +25,28 @@ const ChatContext = createContext<IChatContext>({
     setActiveChatId: () => { },
     chatList: [],
     chatListLoading: true,
+    clearChatState: () => { },
 })
 
 const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { user, userLoading } = useAuth();
-    const [activeChatId, setActiveChatId] = useState<string | null>(null);
-    const [activeChat, setActiveChat] = useState<ActiveChat | null>(null);
-    const [activeChatLoading, setActiveChatLoading] = useState<boolean>(true);
-    const [chatList, setChatList] = useState<PopulatedChatGroup[]>([]);
-    const [chatListLoading, setChatListLoading] = useState<boolean>(true);
+    const { user, userLoading } = useAuth()
+    const [activeChatId, setActiveChatId] = useState<string | null>(null)
+    const [activeChat, setActiveChat] = useState<ActiveChat | null>(null)
+    const [activeChatLoading, setActiveChatLoading] = useState<boolean>(true)
+    const [chatList, setChatList] = useState<PopulatedChatGroup[]>([])
+    const [chatListLoading, setChatListLoading] = useState<boolean>(true)
 
     useEffect(() => {
         // do something when active chat changes
-        const cleanupFunctions: Unsubscribe[] = [];
+        const cleanupFunctions: Unsubscribe[] = []
+
         const getMessages = async () => {
             if (activeChatId) {
                 const activeChatGroup = chatList.find((chat) => chat.id === activeChatId)
                 setActiveChat({ id: activeChatId, messages: [], members: activeChatGroup ? activeChatGroup.members : [] })
-                const unsubscribe = onSnapshot(query(messagesRef(activeChatId), orderBy("sentAt", "asc")),
+                const unsubscribe = onSnapshot(query(messagesRef(activeChatId), orderBy('sentAt', 'asc')),
                     (snapshot) => {
-                        const data = snapshot.docs.map((doc) => doc.data() as Message);
+                        const data = snapshot.docs.map((doc) => doc.data() as Message)
                         // populate the message with the sender name, avatar, etc.
                         const populatedMessages: PopulatedMessage[] = data.map((message) => (
                             // the users are already in the chat group, so we can just get the user from the chat group
@@ -52,88 +58,96 @@ const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                                 return { ...prev, messages: populatedMessages }
                             }
                             return null
-                        });
+                        })
 
                         if (activeChatLoading) {
-                            setActiveChatLoading(false);
+                            setActiveChatLoading(false)
                         }
-                    });
-                cleanupFunctions.push(unsubscribe);
+                    })
+                cleanupFunctions.push(unsubscribe)
             }
         }
         if (activeChatId === null) {
-            setActiveChat(null);
+            setActiveChat(null)
         }
         getMessages()
         return () => {
             cleanupFunctions.forEach((unsubscribe) => {
-                unsubscribe();
-            });
-        };
-    }, [activeChatId]);
+                unsubscribe()
+            })
+        }
+    }, [activeChatId])
 
     useEffect(() => {
-        const cleanupFunctions: Unsubscribe[] = [];
+        const cleanupFunctions: Unsubscribe[] = []
 
         const getChatList = async () => {
             if (user && !userLoading) {
-                const chatGroups = user.chatGroups;
+                const chatGroups = user.chatGroups
 
                 for (const chatGroupId of chatGroups) {
                     const unsubscribe = onSnapshot(chatGroupRef(chatGroupId), async (snapshot) => {
-                        const data = snapshot.data();
+                        const data = snapshot.data()
                         if (data) {
-                            const members: User[] = [];
+                            const members: User[] = []
                             for (const id of data.members) {
-                                const member = await populateUserId(id);
+                                const member = await populateUserId(id)
                                 if (member) {
-                                    members.push(member);
+                                    members.push(member)
                                 }
                             }
 
-                            const populatedData = { ...data, members };
-                            console.log("DATA", populatedData)
+                            const populatedData = { ...data, members }
+                            console.log('DATA', populatedData)
 
                             setChatList((prevChatList) => {
-                                const chatGroupIndex = prevChatList.findIndex((chatGroup) => chatGroup.id === populatedData.id);
+                                const chatGroupIndex = prevChatList.findIndex((chatGroup) => chatGroup.id === populatedData.id)
                                 if (chatGroupIndex !== -1) {
-                                    const newChatList = [...prevChatList];
-                                    newChatList[chatGroupIndex] = populatedData;
-                                    return newChatList;
+                                    const newChatList = [...prevChatList]
+                                    newChatList[chatGroupIndex] = populatedData
+                                    return newChatList
                                 }
-                                return [...prevChatList, populatedData];
+                                return [...prevChatList, populatedData]
 
-                            });
+                            })
                         }
                     })
-                    cleanupFunctions.push(unsubscribe);
+                    cleanupFunctions.push(unsubscribe)
                 }
 
                 // setChatList(populatedChatGroups);
                 if (chatListLoading) {
-                    setChatListLoading(false);
+                    setChatListLoading(false)
                 }
             }
-        };
+        }
 
-        getChatList();
+        getChatList()
 
         return () => {
             cleanupFunctions.forEach((unsubscribe) => {
-                unsubscribe();
-            });
-        };
-    }, [user, userLoading]);
+                unsubscribe()
+            })
+        }
+    }, [user, userLoading])
+
+    const clearChatState = () => {
+        setActiveChatId(null)
+        setActiveChat(null)
+        setActiveChatLoading(true)
+        setChatList([])
+        setChatListLoading(true)
+    }
 
     return (
-        <ChatContext.Provider value={{ activeChatId, activeChat, activeChatLoading, setActiveChatId, chatList, chatListLoading }}>
+        <ChatContext.Provider value={{ activeChatId, activeChat, activeChatLoading, setActiveChatId, chatList, chatListLoading, clearChatState }}>
             {children}
         </ChatContext.Provider>
-    );
-};
+    )
+}
 
 export function useChat() {
-    return useContext(ChatContext);
+    return useContext(ChatContext)
 }
 
 export default ChatProvider

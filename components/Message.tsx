@@ -38,9 +38,9 @@ export const MessageSkeleton = () => {
     return (
         <Flex px='5' py='1'>
             <SkeletonCircle size='12' />
-            <Flex flexDirection="column" justifyContent="space-evenly" pl='2' >
-                <Skeleton w="32" h="4" />
-                <Skeleton w="32" h="2" />
+            <Flex flexDirection='column' justifyContent='space-evenly' pl='2' >
+                <Skeleton w='32' h='4' />
+                <Skeleton w='32' h='2' />
             </Flex>
         </Flex>
     )

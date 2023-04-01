@@ -19,10 +19,16 @@ import { useAuth } from '../context/AuthContext'
 import { GoSettings } from 'react-icons/go'
 import { BsSun, BsMoonStarsFill } from 'react-icons/bs'
 import { MdOutlineLogout } from 'react-icons/md'
+import { useChat } from '../context/ChatContext'
 
 const UserInfoBar = () => {
 	const { colorMode, toggleColorMode } = useColorMode()
 	const { user, userLoading, logout } = useAuth()
+	const { clearChatState } = useChat()
+	const handleSignOut = () => {
+		clearChatState()
+		logout()
+	}
 
 	const Avatar = () => {
 		if (!userLoading && user) {
@@ -83,7 +89,7 @@ const UserInfoBar = () => {
 					Actions
 				</MenuButton>
 				<MenuList>
-					<MenuItem onClick={logout}>
+					<MenuItem onClick={handleSignOut}>
 						<MdOutlineLogout />
 						<Text mx='2'>Log out</Text>
 					</MenuItem>
